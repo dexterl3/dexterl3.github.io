@@ -1,0 +1,142 @@
+@charset "utf-8";
+/* Dexter Lesaca III, Info 343 C */
+
+#topmenu{
+	display:inline;
+
+
+}
+
+#topmenu li{
+	display:inline;
+	
+}
+
+
+
+#topmenu a{
+	color:white;
+	text-decoration:none;
+	padding-right:.5em;
+	padding-left:.5em;
+	padding-top:.25em; 
+	padding-bottom:.25em;
+}
+
+#in{
+	color:black;
+	background-color:white;	
+	padding-right:.5em;
+	padding-left:.5em;
+	padding-top:.25em;
+	padding-bottom:.25em;
+}
+
+
+#head{
+	background-color:#1BB9CB;
+	margin-bottom:1em;
+	margin-left:1em;
+	margin-right:1em;
+	padding-left:1em;
+	color:white;
+	
+}
+h1{
+	display: inline-block;
+}
+
+
+#title2{
+	font-style:italic;
+	font-size:1.2em;
+	margin-left:1em;
+	
+}
+
+
+
+a:hover {
+	color:white;	
+}
+.none a:link, a:visited{
+	text-decoration:none;
+	color:white;
+}
+
+a:visited{
+text-decoration:none;
+	color:white;
+}
+
+body{
+	float:left;
+	margin-right:2em;
+	margin-left:2em;
+	font-family:"Palatino Linotype", "Book Antiqua", Palatino, serif;
+	font-size:112.5%;
+
+
+}
+
+.a{
+	background-color:lightgray;
+	overflow:hidden;
+	margin-bottom:.5em;
+	margin-top:.5em;
+	
+
+	}
+	
+.a a {
+	color:red;	
+}
+
+
+#column{
+	float:right;
+	background-color:#1BB9CB;
+	width:17.5%;
+	
+	padding:.2em;
+	color:white;	
+	
+}
+#column li{
+	font-size:80%;	
+
+}
+
+#pink{
+	background-color:white;
+	margin-left:1em;
+	margin-right:1em;
+	
+}
+
+#footer{
+	clear:both;
+	background-color:#1BB9CB;
+	text-align:center;
+
+	
+}
+
+#body p{
+	line-height:130%	
+}
+
+#body{
+	width:80%;
+	margin-right:12em;
+	background-color:#1BB9CB;
+	padding:.4em;
+
+}
+
+.img{
+	float:right;
+	width:40%;	
+	padding-bottom:1em;
+	padding-left:1em;
+}
