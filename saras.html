@@ -16,23 +16,8 @@
     <!-- Bootstrap core CSS -->
     <link href="design.css" type="text/css" rel="stylesheet" />
 	
-	<style type="text/css">
-      html, body, #map-canvas { height: 100%; margin: 0; padding: 0;}
-    </style>
- <script type="text/javascript"
-      src="https://maps.googleapis.com/maps/api/js?key=API_KEY">
-    </script>
-    <script type="text/javascript">
-      function initialize() {
-        var mapOptions = {
-          center: { lat: -34.397, lng: 150.644},
-          zoom: 8
-        };
-        var map = new google.maps.Map(document.getElementById('map-canvas'),
-            mapOptions);
-      }
-      google.maps.event.addDomListener(window, 'load', initialize);
-    </script>
+	<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -82,9 +67,12 @@
       <!-- Example row of columns -->
       <div class="row">
 
-<div id="map-canvas"></div>
+<div class="itembox"></div>
+  
+    <!-- for ADD ITEM, do an IF item is < 2-5 then have the image be ADD item -->
+    </div>
 
-      <!-- 
+      <!-- http://simonguest.com/2012/07/06/uploading-photos-from-mobile-web-applications/
 	  Hat
 	  Scarf
 	  Accessories
@@ -121,9 +109,6 @@
 	  
 	  
 	  -->
-
-		
-		</div>
       <hr>
 
       <footer>
