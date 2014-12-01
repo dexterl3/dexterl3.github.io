@@ -1,7 +1,6 @@
 
 	<!DOCTYPE html><!DOCTYPE html>
 	
-<!-- Dexter Lesaca III, 09/2013 -->
 
 <html lang="en">
   <head>
