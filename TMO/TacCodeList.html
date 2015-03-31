@@ -38,51 +38,93 @@
                                     <tr>
                                         <th>Tac Code</th>
                                         <th>Device Name</th>
-                                        <th>Select</th>
+                                        <th>Move to Test</th>
                                         <th>Add/Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
+                                  <!--  <tr>
                                         <td id="tableId">12345678</td>
                                         <td>Samsung</td>
-                                        <td><input type="checkbox"  align="center"/></td>
+                                        <td><input type="checkbox" id="selectTacCode" align="center"/></td>
                                         <td><a href="#" id="tacAdd" align="center" >+/-</a></td>
                                     </tr>
 									<tr>
                                         <td>23456789</td>
-                                        <td>S6</td>
-                                        <td><input type="checkbox" id="selectTacCode"  align="center"/></td>
-                                        <td><a href="#" id="tacAdd" align="center" >+/-</a></td>
-                                    </tr>
-									<tr>
-                                        <td>23456789</td>
-                                        <td>S6</td>
+                                        <td>S4</td>
                                         <td><input type="checkbox" align="center"/></td>
-                                        <td><a href="#" id="tacAdd" align="center">+/-</a></td>
+                                        <td><a href="#" id="tacAdd" align="center" >+/-</a></td>
                                     </tr>
+									<tr>
+                                        <td>23456789</td>
+                                        <td>S6</td>
+                                        <td><input type="checkbox"  align="center"/></td>
+                                        <td><a href="#" id="tacAdd" align="center">+/-</a></td>
+                                    </tr>-->
 									
 									</tbody>
-									</thead>
+									
 									</table>
 				</div>
 				</div>
 				</div>
 				</iframe>
 				<a href="#" id="btnExport">Export data into Excel</a>
-				<!--<input class="src-only" type= "button" id="fileUpload" value="C:/Users/KChinnu1/Downloads/ExportHTMLTable.csv"/>--> 
+				<!--<input class="src-only" type= "button" id="fileUpload" value="C:/Users/KChinnu1/Downloads/ExportHTMLTable.csv"/>-->
 				
 				<div id="dialog-confirm" title="Confirmation Dialog">
 				 
 				</div>
 				
-				<!--<div id="dvCSV"></div>-->
+				<div id="dvCSV"></div>
 				
 				<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
 				<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 				<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
 				
 				<script>
+				
+				
+				var tacCode=[12345678,45678901,34567890];
+				
+				var tableData = [ 
+                ["12345678", "","","" ], 
+                ["45678901", "" ,"",""], 
+                ["34567890", "","",""]];
+				
+			
+				$(document).ready(function(){
+				addToCSV();
+				//makeTable(tableData);
+				});
+				
+				
+				function makeTable(tableData) {
+
+    $.each(tableData, function(rowIndex, r) {
+		var row = $("<tr/>");
+        $.each(r, function(colIndex, c) { 
+           // row.append($("<td"+"/>").text(c));
+			//row.append($("<td"+ "input type='checkbox' id='selectTacCode'"+ "/>"));
+			$("#testTable").append("<tr>"
+			+"<td"+"/>").text(c)
+			+ "<td>"+c[1]+"</td>"
+            +"<td><input type='checkbox' id='selectTacCode' /></td>"
+            + "<td><a href='#' id='tacAdd'  >+/-</a></td>"
+           +" </tr>"
+			
+			
+			
+			);
+        });
+       $("#testTable").append(row);
+		
+    });
+	
+	
+   
+}
+				
 				
 		$("#btnExport ").on('click', function (event){
 			//Get table
@@ -168,7 +210,7 @@
 	 
       buttons: {
 		Yes: function() {
-		
+		addToCSV()
 		$(this).dialog("close");
 		
          },
@@ -186,44 +228,41 @@
 	function addToCSV(){
 	
 	
-	console.log("into addCSV function");
 	
 	
-		
-		var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
-		var file ;
-		
-		
-        if (regex.test(fileUpload.value.toLowerCase())) {
-        if (typeof (FileReader) != "undefined") {
-            var reader = new FileReader();
-            reader.onload = function (e) {
-                
-                var rows = e.target.result.split("\n");
-                for (var i = 0; i < rows.length; i++) {
-                  
-                    var cells = rows[i].split(",");
-                    for (var j = 0; j < cells.length; j++) {
-					console.log(cells[j]);
-					if(cells[j]=="12345678")
-					cells[j+2]="2";
-                     
-					 
+		var file="C:/Users/KChinnu1/Downloads/ExportHTMLTable"
+        var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv|.txt)$/;
+        if (regex.test(file)) {
+            if (typeof (FileReader) != "undefined") {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    var table = $("<table />");
+                    var rows = e.target.result.split("\n");
+                    for (var i = 0; i < rows.length; i++) {
+                        var row = $("<tr />");
+                        var cells = rows[i].split(",");
+                        for (var j = 0; j < cells.length; j++) {
+                            var cell = $("<td />");
+                            cell.html(cells[j]);
+                            row.append(cell);
+                        }
+                        table.append(row);
                     }
+                    $("#dvCSV").html('');
+                    $("#dvCSV").append(table);
                 }
-                
+                reader.readAsText($("#fileUpload")[0].files[0]);
+            } else {
+                alert("This browser does not support HTML5.");
             }
-            reader.readAsText(fileUpload.files[0]);
-        } else {
-            alert("This browser does not support HTML5.");
-        }
-    } else {
-        alert("Please upload a valid CSV file.");
+        
     }
-	
 }
 	
+			$(document).ready(function(){
+			makeTable(tableData);
 			
+			});
 			
 			
 				

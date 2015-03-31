@@ -383,13 +383,14 @@ var tacCode=[12345678,45678901,34567890];
 	 tableId=countTable++;
 	 return tableId ;
 	}
-
+	//************ Search TacCode button
 	$("#search-btn").click(function(){
 	
 	tacCodeVal[0]=$("#serachByTacCode").val();
-	console.log("the length is"+tacCodeVal[0].length);
-	if(tacCodeVal[0].length==8){
 	
+	if(tacCodeVal[0].length==8){
+	count=1;
+	countTable=1;
 	createContainer(tacCodeVal,dataset,tableData);
 	}else{
 	window.alert("Enter a valid TacCode");
@@ -398,8 +399,11 @@ var tacCode=[12345678,45678901,34567890];
 	
 	//****Drop down Click
 	$("#sel1").click(function(){
-		if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
-		
+				
+			
+			if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
+			count=1;
+			countTable=1;
 			createContainer(tacCode,dataset,tableData);
 		}
 	});
@@ -407,8 +411,10 @@ var tacCode=[12345678,45678901,34567890];
 	
  //*** Creation of the container
 function createContainer(tacCode,dataset,tableData){
-	for(var i=0;i<tacCode.length;i++){
-
+					$("#tacCode1").empty();
+					for(var i=0;i<tacCode.length;i++){
+					
+					
 					$("#tacCode1").append("<section class='content-header'>"+"<h4><b style='color:blue' >TacCode:" +tacCode[i]+"</b></h4>");
 					
 					$("#tacCode1").append("<div class='row'>"+"<div class='col-md-4'>"
@@ -496,27 +502,29 @@ function createContainer(tacCode,dataset,tableData){
 	}
 			var graphCount = graphId;
 			
-			for(var j = 1; j <= graphCount; j++){
-				if(j==1 || (j%5)==0){
-				$.plot(("#flot-placeholder"+j),dataset2,options);
-				$("#flot-placeholder"+j).UseTooltip();
+			for(var j = 0; j < graphCount; j++){
+					
+				if((j==0 )|| ((j%4)==0)){
+				
+				$.plot(("#flot-placeholder"+(j+1)),dataset2,options);
+				$("#flot-placeholder"+(j+1)).UseTooltip();
+				makeTable( tableData,$("#table-placeholder"+(j+1)));
 				}
 				else {
-				$.plot(("#flot-placeholder"+j),dataset,options);
-				$("#flot-placeholder"+j).UseTooltip();
+				
+				
+				$.plot(("#flot-placeholder"+(j+1)),dataset,options);
+				$("#flot-placeholder"+(j+1)).UseTooltip();
+				makeTable( tableData,$("#table-placeholder"+(j+1)));
 				 }
 				
-				makeTable( tableData,$("#table-placeholder"+j));
+				
 			}
+			
 			
  }
 	
-	
-	
-  
-  		
-					
-    
+
  
 
  
