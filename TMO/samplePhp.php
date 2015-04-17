@@ -211,7 +211,7 @@ foreach ($list as $values)
 	
     $('#testTable tbody tr').each(function(index){     
        // copy the text into an array
-	   
+	   // Static values, has trouble getting dynamic values
 	   
 	   console.log("$(this)).text()"+ $(this).text());
 	    
