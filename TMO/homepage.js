@@ -262,40 +262,121 @@ var tacCode=[12345678,45678901,34567890];
 		var tableId;
 		var tacCodeVal=[];
 		
-		function createGraphId(){
-		graphId=count++
-		return graphId ;
+function createGraphId(){
+	graphId=count++
+	return graphId ;
+}
 		
-		}
-		
-	function createTableId(){
-	 tableId=countTable++;
-	 return tableId ;
-	}
+function createTableId(){
+	tableId=countTable++;
+	return tableId;
+}
+
 	//************ Search TacCode button
-	$("#search-btn").click(function(){
-	
+$("#search-btn").click(function(){
+
 	tacCodeVal[0]=$("#serachByTacCode").val();
-	
+
 	if(tacCodeVal[0].length==8){
-	count=1;
-	countTable=1;
-	createContainer(tacCodeVal,dataset,tableData);
+		count=1;
+		countTable=1;
+		createContainer(tacCodeVal,dataset,tableData);
 	}else{
-	window.alert("Enter a valid TacCode");
+		window.alert("Enter a valid TacCode");
 	}
-	});
-	
-	//****Drop down Click
-	$("#sel1").click(function(){
-				
+});
+
+//**** Drop down Click
+$("#sel1").click(function(){
 			
-			if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
+		getTacCodes();
+		
+		if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
 			count=1;
 			countTable=1;
 			createContainer(tacCode,dataset,tableData);
-		}
-	});
+	}
+});
+
+
+// happens when page loads
+$( document ).ready(function() {
+  getTacCodes();
+});
+/* 			Dexters Section*/
+
+function getTacCodes(){
+
+	
+	$.post('getTacCodes.php', 'val=getTacCodes' , function (data) {
+		console.log( data); // clear tables or run function
+	
+		
+		
+	},'json');
+	
+	/*
+	Call at start of page
+
+	Ajax to getTacCodes
+	Store in array
+
+	for each for Tac Code List
+	*/
+}	
+
+
+function createTacCodeInfo(){
+/*
+	Ajax call for X many weeks, Array of dates
+	
+	for each week in array{
+
+		Ajax call each?
+		query1
+		query2
+		query3
+		query4
+		
+		createGraphs(query1)
+		createTables(query1)
+		
+		createGraphs(query2)
+		createTables(query2)
+		
+		createGraphs(query3)
+		createTables(query3)
+		
+		createGraphs(query4)
+		createTables(query4)
+
+	}
+*/
+
+}
+
+// maybe combine tables and graph into one?
+function createGraphs(){
+	/*
+		Pass in tac code
+		Call createGraphId// need to create Id from tac Code to target ?
+		
+		Pass in Array of 7 weeks
+		pass in array of Count from Ajax
+		
+		Pass into flot
+		Add to ID generated
+	*/
+}
+
+function createTables(){
+
+}
+
+
+
+
+
 	
 	
  //*** Creation of the container

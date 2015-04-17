@@ -4,6 +4,8 @@ error_reporting(E_ALL);
 
 ini_set('display_errors', 'On');
 
+echo "test";
+
 #$value = $_POST['val'];
 
 $db = "(DESCRIPTION=(ADDRESS_LIST = (ADDRESS = (PROTOCOL = TCP)(HOST = 5.65.17.53)(PORT = 1521)))(CONNECT_DATA=(SID=dsedw1)))";
@@ -18,13 +20,8 @@ $tempCounter = 0;
 while (($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
  
     foreach ($row as $item) {
-        #echo "  <p>". $tempCounter . " space " .($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;")."</p>\n";
-		if($item !== null ){
-			$tacCodes[$tempCounter] = $item;
-			
-			$tempCounter++;
-		}
-		
+        #echo "  <p>".($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;")."</p>\n";
+		$tacCodes[$tempCounter] = $item;
     }
 }
 
@@ -33,7 +30,7 @@ while (($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
 
 #echo " win end";
 
-echo json_encode(array_values($tacCodes));
+#echo json_encode(array('status' => 'success','message'=> 'The group has been removed')
 
 
 ?>
