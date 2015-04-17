@@ -95,7 +95,8 @@
 				
 				
 							</div>
-							
+	
+
 <script type="text/javascript" src="bootstrap/plugins/jQuery/jquery.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 <script type="text/javascript" src="bootstrap/plugins/jquery-ui-1.11.3/jquery-ui.js"> </script>			  
@@ -107,9 +108,7 @@
 <script type="text/javascript" src="bootstrap/plugins/js/flot/jquery.flot.axislabels.js"></script>
 
 
-
 <script>
-//*******  Chart
 var data1 = [
     [gd(2015, 1, 28), 2935], [gd(2015, 2, 4), 2913], [gd(2015, 2, 11), 3483], [gd(2015, 2, 25), 3399],
     [gd(2015, 3, 4), 4518], [gd(2015, 3, 11), 3566]
@@ -162,6 +161,7 @@ var dataset = [
 
 var dataset2 = [
      { label: "Total",
+	 
           data: data1,
           color: "#3c8dbc",
 		  points: { symbol: "circle"} },
@@ -366,7 +366,8 @@ function makeTable(tableData,ntableId) {
  
  
  });
-var tacCode=[12345678,45678901,34567890];
+var tacCode=[12345678,23456789,90876543];
+var deviceNames=[];
 		var count=1;
 		var countTable=1;
 		var graphId;
@@ -404,18 +405,28 @@ var tacCode=[12345678,45678901,34567890];
 			if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
 			count=1;
 			countTable=1;
-			createContainer(tacCode,dataset,tableData);
+			var headers=[];
+		
+	
+	if(deviceNames.length >0){
+		
+		createContainer(deviceNames,dataset,tableData);
+	}else{
+		createContainer(tacCode,dataset,tableData);
+	}
+		
+			
 		}
 	});
 	
 	
  //*** Creation of the container
-function createContainer(tacCode,dataset,tableData){
+function createContainer(headers,dataset,tableData){
 					$("#tacCode1").empty();
-					for(var i=0;i<tacCode.length;i++){
+					for(var i=0;i<headers.length;i++){
 					
 					
-					$("#tacCode1").append("<section class='content-header'>"+"<h4><b style='color:blue' >TacCode:" +tacCode[i]+"</b></h4>");
+					$("#tacCode1").append("<section class='content-header'>"+"<h4><b style='color:blue ;align:center' >" +headers[i]+"</b></h4>");
 					
 					$("#tacCode1").append("<div class='row'>"+"<div class='col-md-4'>"
 					+"<div class='box box-primary'>"
@@ -505,14 +516,14 @@ function createContainer(tacCode,dataset,tableData){
 			for(var j = 0; j < graphCount; j++){
 					
 				if((j==0 )|| ((j%4)==0)){
-				
+				console.log("the value of j in if"+j);
 				$.plot(("#flot-placeholder"+(j+1)),dataset2,options);
 				$("#flot-placeholder"+(j+1)).UseTooltip();
 				makeTable( tableData,$("#table-placeholder"+(j+1)));
 				}
 				else {
 				
-				
+				console.log("the value of j in else"+j);
 				$.plot(("#flot-placeholder"+(j+1)),dataset,options);
 				$("#flot-placeholder"+(j+1)).UseTooltip();
 				makeTable( tableData,$("#table-placeholder"+(j+1)));
@@ -524,12 +535,44 @@ function createContainer(tacCode,dataset,tableData){
 			
  }
 	
-
+  $(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: "./TacCodeTest.csv",
+        dataType: "text",
+        success: function(data) {processData(data);}
+     });
+}); 
  
+function processData(allText){
+	
+	var allTextLines=[];
+	var entries =[];
+	var lines=[];
+     allTextLines = allText.split(/\r\n|\n/);
+	for(var i=1;i<allTextLines.length;i++){
+		
+	  entries = allTextLines[i].split(',');	
+		for(k=0;k<tacCode.length;k++){
+			
+		if(tacCode[k]== entries[0]){
+				if(entries[1]!=''){
+					
+					deviceNames[i-1]=entries[1];
+				}else {
+					
+					deviceNames[i-1]=entries[0];
+				}
+				
+			}
+			 }
+		
+		
+	}
+   
+}
+</script>
 
- 
- </script> 
-			  
 	 
 	</body>
 </html>
