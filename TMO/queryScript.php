@@ -17,8 +17,15 @@ $stid = oci_parse($c1, 'select distinct(substr(IMEI,0,8)) from UNLOCK_CDR_FACT w
 // Test variables
 $testDate = 20150413;
 $testEndDate = 20150417;
-$testIMEI = 35;
-$query = "q1"; // Change
+
+$testIMEI = $_POST['imei'];
+
+$query = $_POST['val'];
+
+$startDate = $_POST['startDate'];
+$endDate = $_POST['endDate'];
+
+echo "$startDate and end date is $endDate \n";
 
 $tacCodes = array();
 $tempCounter = 0;
@@ -35,31 +42,29 @@ while (($row = oci_fetch_array($stid, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
 
 // **************** Actual Query Code ***********************************
 if($query == "q1"){
-	echo "Registration: ";
+	#echo "Registration: ";
 	$queryString1 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(attestation_status) like '%' and day_key >=  ";
 	
 	$registrationQ1 = oci_parse($c1, $queryString1 . $testDate . 'AND day_key <' . $testEndDate ); 
+	
+	oci_execute($registrationQ1);
+	printQueries($registrationQ1);
+	
+	
 	
 	$queryString2 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(attestation_status) = 'true' and day_key >=  ";
 
 	$registrationQ2 = oci_parse($c1,$queryString2 . $testDate . ' AND DAY_Key <' . $testEndDate  );
 	
-	$queryString3 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(attestation_status) = 'false' and day_key >=  ";
-	$registrationQ3 = oci_parse($c1,$queryString3. $testDate . ' AND DAY_Key <' . $testEndDate );
-	
-	oci_execute($registrationQ1);
-	printQueries($registrationQ1);
-	
-
 	oci_execute($registrationQ2);
 	printQueries($registrationQ2);
 	
-	oci_execute($registrationQ3);
-	printQueries($registrationQ3);
+	//combine all four into array
+	
 }
 
-$query = "q2";// Delete
 
+// Graph 2
 if($query == "q2"){
 	echo "Temp unlocks: ";	
 	
@@ -70,48 +75,20 @@ if($query == "q2"){
 	
 	$queryString2 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'y' AND unlockrequest_type = 1  and day_key >  ";
 
+	
 	$tempUnlock2 = oci_parse($c1,$queryString2 . $testDate . ' AND DAY_Key <' . $testEndDate  );
 	
-	$queryString3 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
-'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'n' AND unlockrequest_type = 1 and day_key >  ";
-	$tempUnlock3 = oci_parse($c1,$queryString3. $testDate . ' AND DAY_Key <' . $testEndDate );
 	
-	$queryString4 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
-'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'null' AND unlockrequest_type = 1 and day_key >  ";
-	$tempUnlock4 = oci_parse($c1,$queryString4. $testDate . ' AND DAY_Key <' . $testEndDate );
-	
-	oci_execute($tempUnlock1);
-	printQueries($tempUnlock1);
-	oci_execute($tempUnlock2);
-	printQueries($tempUnlock2);
-	oci_execute($tempUnlock3);
-	printQueries($tempUnlock3);
-	oci_execute($tempUnlock4);
-	printQueries($tempUnlock4);
-}
-
-$query = "q3"; // Delete
-
-
-if($query == "q3"){
 	echo "perm unlocks: ";
 	$queryString1 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
 '%unlockresponse%' AND unlockrequest_type = 2 and day_key >  ";
 	
 	$permUnlock1 = oci_parse($c1, $queryString1 . $testDate . 'AND day_key <' . $testEndDate ); 
 	
-	$queryString2 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
+	$queryString3 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
 '%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'y' AND unlockrequest_type = 2and day_key >  ";
 
-	$permUnlock2 = oci_parse($c1,$queryString2 . $testDate . ' AND DAY_Key <' . $testEndDate  );
-	
-	$queryString3 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
-'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'n' AND unlockrequest_type = 2 and day_key >  ";
-	$permUnlock3 = oci_parse($c1,$queryString3. $testDate . ' AND DAY_Key <' . $testEndDate );
-	
-	$queryString4 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
-'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'null' AND unlockrequest_type = 2 and day_key >  ";
-	$permUnlock4 = oci_parse($c1,$queryString4. $testDate . ' AND DAY_Key <' . $testEndDate );
+	$permUnlock2 = oci_parse($c1,$queryString3 . $testDate . ' AND DAY_Key <' . $testEndDate  );
 	
 	
 	oci_execute($permUnlock1);
@@ -120,17 +97,95 @@ if($query == "q3"){
 	oci_execute($permUnlock2);
 	printQueries($permUnlock2);
 	
-	oci_execute($permUnlock3);
-	printQueries($permUnlock3);
 	
-	oci_execute($permUnlock4);
-	printQueries($permUnlock4);
+	oci_execute($tempUnlock1);
+	printQueries($tempUnlock1);
+	oci_execute($tempUnlock2);
+	printQueries($tempUnlock2);
+
 }
 
+// Graph 3, need to know if I need n or 'null'
+if($query == "q3"){
 
-$query = "q4"; // Delete
+	
+	$queryString = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
+'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'n' AND unlockrequest_type = 2 and day_key >  ";
+	$permUnlock = oci_parse($c1,$queryString. $testDate . ' AND DAY_Key <' . $testEndDate );
+	
+	$queryString2 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
+'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'null' AND unlockrequest_type = 2 and day_key >  ";
+	$permUnlock2 = oci_parse($c1,$queryString2. $testDate . ' AND DAY_Key <' . $testEndDate );
+	
+	
+	$queryString3 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
+'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'n' AND unlockrequest_type = 1 and day_key >  ";
+	$tempUnlock3 = oci_parse($c1,$queryString3. $testDate . ' AND DAY_Key <' . $testEndDate );
+	
+	$queryString4 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(REQUEST_TYPE) like 
+'%unlockresponse%'and  lower(UNLOCK_ELIGIBLE) = 'null' AND unlockrequest_type = 1 and day_key >  ";
+	$tempUnlock4 = oci_parse($c1,$queryString4. $testDate . ' AND DAY_Key <' . $testEndDate );
+
+	
+	oci_execute($permUnlock);
+	printQueries($permUnlock);
+	
+	oci_execute($permUnlock2);
+	printQueries($permUnlock2);
+	
+	oci_execute($tempUnlock3);
+	printQueries($tempUnlock3);
+	oci_execute($tempUnlock4);
+	printQueries($tempUnlock4);
+	
+		
+	$queryString6 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND lower(attestation_status) = 'false' and day_key >=  ";
+	$registrationQ3 = oci_parse($c1,$queryString6. $testDate . ' AND DAY_Key <' . $testEndDate );
+	
+	oci_execute($registrationQ3);
+	printQueries($registrationQ3);
+	
+	$queryString5 = "select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(IMEI) like  '$testIMEI%' AND REQUEST_TYPE like '%UnlockResponse%' AND pe_response_code = 102  and day_key >=  ";
+	$totalErrors = oci_parse($c1,$queryString5. $testDate . ' AND DAY_Key <' . $testEndDate );
+
+	oci_execute($totalErrors);
+	printQueries($totalErrors);
+	
+	//combine all four into array
+}
 
 if($query == "q4"){
+	echo "Total unlocks: ";
+	$queryString1 = "select  COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(REQUEST_TYPE) like 'unlockreceipt%#2' and lower(IMEI) like  '$testIMEI%'and day_key >=  ";
+	
+	$totalUnlock = oci_parse($c1, $queryString1 . $testDate . 'AND day_key <' . $testEndDate ); 
+	
+	oci_execute($totalUnlock);
+	printQueries($totalUnlock);
+
+
+}
+
+// Change to Post back ?
+function printQueries($compiledQuery){
+
+	while (($row = oci_fetch_array($compiledQuery, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
+	 
+		foreach ($row as $item) {
+			#echo "  <p>".($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;")."</p>\n";
+			echo "Count is $item \n";
+		}
+	}
+	
+	#echo json_encode(array_values($tacCodes));
+}
+
+#$result = array_unique($tacCodes);
+
+
+#echo json_encode(array('status' => 'success','message'=> 'The group has been removed')
+/*
+
 	echo "Total unlocks: ";
 	$queryString1 = "select  COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(REQUEST_TYPE) like 'unlockreceipt%#2' and lower(IMEI) like  '$testIMEI%'and day_key >=  ";
 	
@@ -158,25 +213,7 @@ if($query == "q4"){
 	
 	oci_execute($totalErrors);
 	printQueries($totalErrors);
-}
 
-// Change to Post back ?
-function printQueries($compiledQuery){
-
-	while (($row = oci_fetch_array($compiledQuery, OCI_ASSOC+OCI_RETURN_NULLS)) != false) {
-	 
-		foreach ($row as $item) {
-			echo "  <p>".($item !== null ? htmlentities($item, ENT_QUOTES) : "&nbsp;")."</p>\n";
-		}
-	}
-
-}
-
-#$result = array_unique($tacCodes);
-
-
-#echo json_encode(array('status' => 'success','message'=> 'The group has been removed')
-/*
 
 Registration Queries
 select COUNT(DISTINCT IMEI) from UNLOCK_CDR_FACT where lower(attestation_status) like '%' and DAY_Key >= &value1 AND day_key < &value2 AND IMEI = &value3;

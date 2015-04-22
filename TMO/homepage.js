@@ -289,7 +289,7 @@ $("#search-btn").click(function(){
 //**** Drop down Click
 $("#sel1").click(function(){
 			
-		getTacCodes();
+		// getTacCodes();
 		
 		if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
 			count=1;
@@ -301,42 +301,84 @@ $("#sel1").click(function(){
 
 // happens when page loads
 $( document ).ready(function() {
-  getTacCodes();
+  getTacCodesTotal("total"); // need to call function to
+  
+  
+  
+  
 });
-/* 			Dexters Section*/
 
-function getTacCodes(){
+/* 			Dexters Section*/
+/*
+Call at start of page
+Ajax to getTacCodes
+Store in array ?
+for each for Tac Code List
+*/
+function getTacCodesTotal(type){
 
 	
+	//read production and lab file. Create an Array. key value? Dname-> tac, or Tac -> Dname
+	var allTacCodes = new Array();
 	$.post('getTacCodes.php', 'val=getTacCodes' , function (data) {
 		console.log( data); // clear tables or run function
-	
+		allTacCodes = data;
 		
+		if(type == "total"){
+			createTacCodeInfo("","");
+		}else{
 		
+			for(var i = 0; i < data.length; i++){
+				//console.log(data[i]);
+				// If/else depending on what option was checked. Compare values to ones in lab/production array. 
+				
+				// IF new add it to lab
+				
+				// need array for lab and array for production
+				createTacCodeInfo(data[i],"");
+			}
+
 	},'json');
 	
-	/*
-	Call at start of page
-
-	Ajax to getTacCodes
-	Store in array
-
-	for each for Tac Code List
-	*/
+	console.log(allTacCodes);
 }	
 
 
-function createTacCodeInfo(){
-/*
-	Ajax call for X many weeks, Array of dates
+function createTacCodeInfo(tacCode,dateRange){
+
+	console.log(tacCode + " I was called");
 	
+	// get date range ***
+	// get array back [ 20150707,20150711 ]
+	// Ajax call for X many weeks, Array of dates
+	
+	//for(var i = 0; i < date array.length; i++){ // not by data length, thats too many times.
+	
+	$.post('queryScript.php', {val:"q1", imei: tacCode,startDate: "20150407",endDate: "20150417"} , function (data) {
+		console.log( data); // clear tables or run function		
+		
+		
+		// check if its in lab or production?
+		// need array for lab and array for production	
+		
+	}); //,'json'); // add this later
+	
+	
+	// array of count
+	// array of dates/weeks
+	
+	
+	// create graph/table
+	
+	
+	/*
 	for each week in array{
 
 		Ajax call each?
 		query1
 		query2
 		query3
-		query4
+	
 		
 		createGraphs(query1)
 		createTables(query1)
@@ -346,9 +388,7 @@ function createTacCodeInfo(){
 		
 		createGraphs(query3)
 		createTables(query3)
-		
-		createGraphs(query4)
-		createTables(query4)
+
 
 	}
 */
