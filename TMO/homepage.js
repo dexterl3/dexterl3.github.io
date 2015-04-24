@@ -1,55 +1,35 @@
 //*******  Chart
-var data1 = [
+/*var data1 = [
     [gd(2015, 1, 28), 2935], [gd(2015, 2, 4), 2913], [gd(2015, 2, 11), 3483], [gd(2015, 2, 25), 3399],
     [gd(2015, 3, 4), 4518], [gd(2015, 3, 11), 3566]
-];
+]; 
 
 var data2 = [
     [gd(2015, 1, 28), 2198], [gd(2015, 2, 4), 2091], [gd(2015, 2, 11), 2509], [gd(2015, 2, 25), 2447],
     [gd(2015, 3, 4), 3236], [gd(2015, 3, 11), 2554]
 ];
-var data3=[[gd(2015, 1, 28), 953], [gd(2015, 2, 4), 1013], [gd(2015, 2, 11), 1214], [gd(2015, 2, 25), 1186],
+/* var data3=[[gd(2015, 1, 28), 953], [gd(2015, 2, 4), 1013], [gd(2015, 2, 11), 1214], [gd(2015, 2, 25), 1186],
     [gd(2015, 3, 4), 1541], [gd(2015, 3, 11), 1209]];
 	
 var data4=[[gd(2015, 1, 28), 83], [gd(2015, 2, 4), 58], [gd(2015, 2, 11), 99], [gd(2015, 2, 25), 74],
     [gd(2015, 3, 4), 175], [gd(2015, 3, 11), 97]];
-	
-	
+	 
+	 */
 
-var tableData = [[" ", "10/9", "10/6","10/8"], //headers
+ var tableData = [[" ", "10/9", "10/6","10/8"], //headers
                 ["Temp", "2", "3","6"], 
                 ["Perm", "4", "5","6"], 
                 ["Error", "8", "9","6"],
 				["Total","10","11","12"]
-				];
+				]; 
 
 				
-	var toDate ,fromDate;
-var dataset = [
-     { label: "Total",
-          data: data1,
-          color: "#3c8dbc",
-		  points: { symbol: "circle"} },
-		  
-		  { label:"Success",
-		  data :data3,
-		  color:"#7CFC00",
-		  points:{symbol:"square"}
-		 },
-		 { label:"Null",
-		  data :data4,
-		  color:"#00c0ef",
-		  points:{symbol:"circle"}
-		 },
-    { label: "Fail",
-          data: data2,
-          color: "#DC143C",
-		  points: { symbol: "triangle"} 
-		  
-		  }
-];
+var toDate ,fromDate;
+var a,b;
 
-var dataset2 = [
+
+
+/* var dataset2 = [
      { label: "Total",
           data: data1,
           color: "#3c8dbc",
@@ -71,59 +51,8 @@ var dataset2 = [
 		  points: { symbol: "triangle"} 
 		  
 		  }
-];
+]; */
 
-var options = {
-    series: {
-        shadowSize: 0,
-            lines: {
-              show: true
-            },
-            points: {
-              show: true
-            }
-    },
-    xaxis: {
-	    
-        mode: "time",
-        tickSize: [7,"day"],        
-        tickLength: 0,
-        axisLabel: "",
-        axisLabelUseCanvas: true,
-        axisLabelFontSizePixels: 10,
-        axisLabelFontFamily: 'Verdana, Arial',
-        axisLabelPadding: 10
-    },
-    yaxes: [{
-			
-            axisLabel: "",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 10,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 3,
-            tickFormatter: function (v, axis) {
-                return $.formatNumber(v, { format: "#,###", locale: "us" });
-            }
-        }],
-    legend: {
-        noColumns: 0,
-        labelBoxBorderColor: "#000000",
-        position: "nw-resize"
-   },
-	lines: {
-            fill: false,
-            color: ["#3c8dbc", "#f56954"]
-          },
-    grid: {
-            hoverable: true,
-            borderColor: "#633200",
-            borderWidth: 1,
-            tickColor: "#f3f3f3"
-			
-			
-    },
-    colors: ["#FF0000", "#0022FF"]
-};
 
 
 
@@ -133,7 +62,7 @@ var options = {
 function gd(year, month, day) {
 
 	
-    return new Date(year, month-1, day).getTime();
+    return new Date(year,month-1,day).getTime();
 	
 	
 	
@@ -143,57 +72,7 @@ var previousPoint = null, previousLabel = null;
 var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 
-$.fn.UseTooltip = function () {
-    $(this).bind("plothover", function (event, pos, item) {
-   if (item) {
-            if ((previousLabel != item.series.label) || (previousPoint != item.dataIndex)) {
-                previousPoint = item.dataIndex;
-                previousLabel = item.series.label;
-                $("#tooltip").remove();
 
-                var x = item.datapoint[0];
-				
-				
-                var y = item.datapoint[1];
-
-                var color = item.series.color;
-                var month = new Date(x).getMonth();
-			     if (item.seriesIndex == 0) {
-						showTooltip(item.pageX,
-                            item.pageY,
-                            color,
-                            "<strong>" + item.series.label + "</strong><br>" + monthNames[month] + " : <strong>" + y + "</strong>(USD)");
-                } else {
-				
-                    showTooltip(item.pageX,
-                            item.pageY,
-                            color,
-                            "<strong>" + item.series.label + "</strong><br>" + monthNames[month] + " : <strong>" + y + "</strong>(%)");
-                }
-            }
-        } else {
-            $("#tooltip").remove();
-            previousPoint = null;
-        } 
-         
-    });
- };
-
-function showTooltip(x, y, color, contents) {
-    $('<div id="tooltip">' + contents + '</div>').css({
-        position: 'absolute',
-        display: 'none',
-        top: y - 40,
-        left: x - 120,
-        border: '2px solid ' + color,
-        padding: '3px',
-        'font-size': '9px',
-        'border-radius': '5px',
-        'background-color': '#fff',
-        'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
-        opacity: 0.9
-    }).appendTo("body").fadeIn(200);
-}
 
 // *********** Table Fill
 function makeTable(tableData,ntableId) {
@@ -303,6 +182,8 @@ $("#sel1").click(function(){
 $( document ).ready(function() {
   getTacCodesTotal("total"); // need to call function to
   
+ //call to createGraphs
+ createGraphs();
   
   
   
@@ -319,7 +200,7 @@ function getTacCodesTotal(type){
 
 	
 	//read production and lab file. Create an Array. key value? Dname-> tac, or Tac -> Dname
-	var allTacCodes = new Array();
+	/*var allTacCodes = new Array();
 	$.post('getTacCodes.php', 'val=getTacCodes' , function (data) {
 		console.log( data); // clear tables or run function
 		allTacCodes = data;
@@ -340,7 +221,7 @@ function getTacCodesTotal(type){
 
 	},'json');
 	
-	console.log(allTacCodes);
+	console.log(allTacCodes);*/
 }	
 
 
@@ -396,6 +277,16 @@ function createTacCodeInfo(tacCode,dateRange){
 }
 
 // maybe combine tables and graph into one?
+var formattedDate=[];
+var formateDt;
+
+var data1 =[,];
+var data2 = [,];
+var actualDates=['20150311','20150318','20150325','20150401','20150408','20150415','20150422'];
+var count_total =['6743','7918','8317','8660','7590','14976','15331'];
+var count_sucess=['6714','7861','8274',	'8493',	'7567',	'14932','15289'];
+ 
+
 function createGraphs(){
 	/*
 		Pass in tac code
@@ -407,130 +298,217 @@ function createGraphs(){
 		Pass into flot
 		Add to ID generated
 	*/
+
+  convertToFormattedDate(actualDates);
+ 	data1 =  dataSet(formattedDate,count_total);
+	data2 =  dataSet(formattedDate,count_sucess);
+
+	regDataset[0].data = data1;
+	regDataset[1].data = data2;
+
+createContainer(regDataset,tableData);
+	
 }
 
+// function to convert stringdate to formatted date for ploting
+
+function convertToFormattedDate(actualDates){
+	console.log("call to convertToFormatteddates");
+	
+	if(actualDates.length>0){
+		for(var i=0;i<actualDates.length;i++){
+	var year=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$1');
+	var month=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$2');
+	var dt=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$3');
+	formattedDate[i]=gd(year,month,dt);
+	}
+	}
+}
+
+
+//function to create datasets
+function dataSet(formattedDate,count_total){
+	
+	var year,month,dt;
+	var plotData=[,];
+	
+	if(formattedDate.length >0 && count_total.length >0){
+		for(var j=0;j<formattedDate.length;j++){
+	var formatDt=parseInt(formattedDate[j]);
+	var tot=parseInt(count_total[j]);
+	plotData[j]=[formatDt,tot];
+	console.log("plotData[j]"+plotData[j]);
+		}
+
+	}	
+return plotData	
+	
+}
 function createTables(){
 
 }
 
+	 
+	 
+	 var regDataset = [
+     { label: "Total",
+          data:data1 ,
+          color: "#3c8dbc",
+		  points: { symbol: "circle"} },
+		  
+		  { label:"Success",
+		  data :data2,
+		  color:"#7CFC00",
+		  points:{symbol:"square"}
+		 }];
+
+var options = {
+    series: {
+        shadowSize: 0,
+            lines: {
+              show: true
+            },
+            points: {
+              show: true
+            }
+    },
+    xaxis: {
+	    
+        mode: "time",
+        tickSize: [7,"day"],        
+        tickLength: 0,
+        axisLabel: "",
+        axisLabelUseCanvas: true,
+        axisLabelFontSizePixels: 10,
+        axisLabelFontFamily: 'Verdana, Arial',
+        axisLabelPadding: 10
+    },
+    yaxis: {
+			
+            axisLabel: "",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 10,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 3,
+            tickFormatter: function (v, axis) {
+                return $.formatNumber(v, { format: "#,###"});
+            }
+        },
+    legend: {
+        noColumns: 1,
+        labelBoxBorderColor: "#000000",
+        position: "nw-resize"
+   },
+	lines: {
+            fill: false,
+            color: ["#3c8dbc", "#f56954"]
+          },
+    grid: {
+            hoverable: true,
+            borderColor: "#633200",
+            borderWidth: 1,
+            tickColor: "#f3f3f3"
+			
+			
+    },
+    colors: ["#FF0000", "#0022FF"]
+};
 
 
+$.fn.UseTooltip = function () {
+    $(this).bind("plothover", function (event, pos, item) {
+		
+		console.log("call to USetooltip"+item);
+   if (item) {
+            if ((previousLabel != item.series.label) || (previousPoint != item.dataIndex)) {
+                previousPoint = item.dataIndex;
+                previousLabel = item.series.label;
+                $("#tooltip").remove();
 
+                var x = item.datapoint[0];
+				console.log("item.datapoint[0]"+item.datapoint[0]);
+				
+                var y = item.datapoint[1];
+				console.log("item.datapoint[1]"+item.datapoint[1]);
+                var color = item.series.color;
+                var month = new Date(x).getMonth();
+			     if (item.seriesIndex == 0) {
+						showTooltip(item.pageX,
+                            item.pageY,
+                            color,
+                            "<strong>" + item.series.label + "</strong><br>" + monthNames[month] +" : <strong>" + y);
+                } else {
+				
+                    showTooltip(item.pageX,
+                            item.pageY,
+                            color,
+                            "<strong>" + item.series.label + "</strong><br>" + monthNames[month] + " : <strong>" + y);
+                }
+            }
+        } else {
+            $("#tooltip").remove();
+            previousPoint = null;
+        } 
+         
+    });
+ };
 
+function showTooltip(x, y, color, contents) {
+    $('<div id="tooltip">' + contents + '</div>').css({
+        position: 'absolute',
+        display: 'none',
+        top: y - 40,
+        left: x - 120,
+        border: '2px solid ' + color,
+        padding: '3px',
+        'font-size': '9px',
+        'border-radius': '5px',
+        'background-color': '#fff',
+        'font-family': 'Verdana, Arial, Helvetica, Tahoma, sans-serif',
+        opacity: 0.9
+    }).appendTo("body").fadeIn(200);
+}
+	 
+	 function createContainer(regDataset,tableData){
+				//	$("#tacCode1").empty();
+					
+	
+	$("#tacCode1").append("<div class='panel panel-default'>"
+	+"<div class='panel-heading'><b>"
+	+"Registration"+"</b></div>"
+	+ "<div class='panel-body'>"
+	
+	+"<div class='row'>"
+	
+	+"<div class='col-md-6'>"
+	
+	+"<div  id='flot-placeholder"+createGraphId()+"'style='height:300px ;width:500px'> </div>"
+	+"</div>"
+	+"<div class='col-md-4'>"
+	+ "<div class='table-responsive' style='width:200px,height :100px'>"
+	+"<br>"
+	+"<br>"
+	+"<br>"
+	+"<table id='table-placeholder"+createTableId()+"'class='table table-bordered table-hover table-striped'>"
 	
 	
- //*** Creation of the container
-function createContainer(tacCode,dataset,tableData){
-					$("#tacCode1").empty();
-					for(var i=0;i<tacCode.length;i++){
-					
-					
-					$("#tacCode1").append("<section class='content-header'>"+"<h4><b style='color:blue' >TacCode:" +tacCode[i]+"</b></h4>");
-					
-					$("#tacCode1").append("<div class='row'>"+"<div class='col-md-4'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-header'>"
-					+"<h4 class='box=title'align='center'> Total Unlocks </h4>"
-					+"</div>"
-					+"<div class='box-body'>"
-					+"<div  id='flot-placeholder"+createGraphId()+"'style='height:300px'> </div>"
-					+"</div>"
-					+"</div>"
-					+"</div>"
-					+"<div class='col-md-2'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-body'>"
-					+"<table id='table-placeholder"+createTableId()+"' class='table table-bordered table-hover' style='margin-bottom:50px;'>"
-					+"<br>"
-					+"<br>"
-					+"<br>"
-					+"</table>"
-					+"</div>"
-					+"</div>"
-					+"</div>"	
-					+"<div class='col-md-4'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-header'>"
-					+"<h4 class='box=title'align='center'>Permanent Unlocks </h4>"
-					+"</div>"
-					
-					+"<div class='box-body'>"
-					+"<div  id='flot-placeholder"+createGraphId()  +"'style='height:300px'> </div>"
-					+"</div>"
-					+"</div>"
-					+"</div>"
-					+"<div class='col-md-2'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-body'>"
-					+"<table id='table-placeholder"+createTableId()+"' class='table table-bordered table-hover' style='margin-bottom:50px;'>"
-					+"<br>"
-					+"<br>"
-					+"<br>"
-					);
-					
-					$("#tacCode1").append("<div class='row'>"+"<div class='col-md-4'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-header'>"
-					+"<h4 class='box=title'align='center'>Unlock Request </h4>"
-					+"</div>"
-					+"<div class='box-body'>"
-					+"<div  id='flot-placeholder"+createGraphId()+"'style='height:300px'> </div>"
-					+"</div>"
-					+"</div>"
-					+"</div>"
-					+"<div class='col-md-2'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-body'>"
-					+"<table id='table-placeholder"+createTableId()+"' class='table table-bordered table-hover' style='margin-bottom:50px;'>"
-					+"<br>"
-					+"<br>"
-					+"<br>"
-					+"</table>"
-					+"</div>"
-					+"</div>"
-					+"</div>"	
-					+"<div class='col-md-4'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-header'>"
-					+"<h4 class='box=title'align='center'>Temporary Unlocks </h4>"
-					+"</div>"
-					
-					+"<div class='box-body'>"
-					+"<div  id='flot-placeholder"+createGraphId()  +"'style='height:300px'> </div>"
-					+"</div>"
-					+"</div>"
-					+"</div>"
-					+"<div class='col-md-2'>"
-					+"<div class='box box-primary'>"
-					+"<div class='box-body'>"
-					+"<table id='table-placeholder"+createTableId()+"' class='table table-bordered table-hover' style='margin-bottom:50px;'>"
-					+"<br>"
-					+"<br>"
-					+"<br>"
-					);
-						
-	}
+	);
+	
+	
 			var graphCount = graphId;
+			console.log("graphId"+graphCount)
 			
 			for(var j = 0; j < graphCount; j++){
-					
-				if((j==0 )|| ((j%4)==0)){
+			
+				console.log("the value of j"+j);
 				
-				$.plot(("#flot-placeholder"+(j+1)),dataset2,options);
+				$.plot(("#flot-placeholder"+(j+1)),regDataset,options);
 				$("#flot-placeholder"+(j+1)).UseTooltip();
 				makeTable( tableData,$("#table-placeholder"+(j+1)));
-				}
-				else {
-				
-				
-				$.plot(("#flot-placeholder"+(j+1)),dataset,options);
-				$("#flot-placeholder"+(j+1)).UseTooltip();
-				makeTable( tableData,$("#table-placeholder"+(j+1)));
-				 }
+				 
 				
 				
 			}
 			
 			
  }
-	
