@@ -237,26 +237,21 @@ function getTacCodesTotal(type){
 					//createTacCodeInfo(data[i],"20150412","20150415");
 				}
 			}else if(type == "lab"){ //else  lab 
-			
 				for(var i = 0; i < data.length; i++){
 					//console.log(data[i]);
 					// IF new Tac Code add it to lab File
 					// 
 					createTacCodeInfo(data[i],"20150412","20150415");					
 				}
-				
 			}
-
 			createGraphs();
 			
-
 		},'json');		
 	}
 }	
 
 // Create arrays of count from queries
 function createTacCodeInfo(tacCode,dateStart,dateEnd){
-
 
 	var arrayDateIndex = 0;
 	// changes dates to length, might need -1
@@ -279,6 +274,7 @@ function createTacCodeInfo(tacCode,dateStart,dateEnd){
 			
 			permTotal[arrayDateIndex] += parseInt(data[4]) 
 			permSuccess[arrayDateIndex] += parseInt(data[5]) 
+			
 			permFail[arrayDateIndex] += parseInt(data[6])
 			tempFail[arrayDateIndex] += parseInt(data[7])
 			peFail[arrayDateIndex] += parseInt(data[8]) 
@@ -308,16 +304,6 @@ var count_sucess=['6714','7861','8274',	'8493',	'7567',	'14932','15289'];
  
 
 function createGraphs(){
-	/*
-		Pass in tac code
-		Call createGraphId// need to create Id from tac Code to target ?
-		
-		Pass in Array of 7 weeks
-		pass in array of Count from Ajax
-		
-		Pass into flot
-		Add to ID generated
-	*/
 
   convertToFormattedDate(actualDates);
  	data1 =  dataSet(formattedDate,registrationTotal);
@@ -326,7 +312,7 @@ function createGraphs(){
 	regDataset[0].data = data1;
 	regDataset[1].data = data2;
 
-createContainer(regDataset,tableData);
+	createContainer(regDataset,tableData);
 	
 }
 
@@ -337,11 +323,11 @@ function convertToFormattedDate(actualDates){
 	
 	if(actualDates.length>0){
 		for(var i=0;i<actualDates.length;i++){
-	var year=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$1');
-	var month=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$2');
-	var dt=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$3');
-	formattedDate[i]=gd(year,month,dt);
-	}
+			var year=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$1');
+			var month=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$2');
+			var dt=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$3');
+			formattedDate[i]=gd(year,month,dt);
+		}
 	}
 }
 
@@ -354,18 +340,15 @@ function dataSet(formattedDate,count_total){
 	
 	if(formattedDate.length >0 && count_total.length >0){
 		for(var j=0;j<formattedDate.length;j++){
-	var formatDt=parseInt(formattedDate[j]);
-	var tot=parseInt(count_total[j]);
-	plotData[j]=[formatDt,tot];
-	console.log("plotData[j]"+plotData[j]);
+			var formatDt=parseInt(formattedDate[j]);
+			var tot=parseInt(count_total[j]);
+			plotData[j]=[formatDt,tot];
+			console.log("plotData[j]"+plotData[j]);
 		}
 
 	}	
-return plotData	
+	return plotData	
 	
-}
-function createTables(){
-
 }
 
 	 
