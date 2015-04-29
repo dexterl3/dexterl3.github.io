@@ -1,75 +1,102 @@
-//*******  Chart
-/*var data1 = [
-    [gd(2015, 1, 28), 2935], [gd(2015, 2, 4), 2913], [gd(2015, 2, 11), 3483], [gd(2015, 2, 25), 3399],
-    [gd(2015, 3, 4), 4518], [gd(2015, 3, 11), 3566]
-]; 
-
-var data2 = [
-    [gd(2015, 1, 28), 2198], [gd(2015, 2, 4), 2091], [gd(2015, 2, 11), 2509], [gd(2015, 2, 25), 2447],
-    [gd(2015, 3, 4), 3236], [gd(2015, 3, 11), 2554]
-];
-/* var data3=[[gd(2015, 1, 28), 953], [gd(2015, 2, 4), 1013], [gd(2015, 2, 11), 1214], [gd(2015, 2, 25), 1186],
-    [gd(2015, 3, 4), 1541], [gd(2015, 3, 11), 1209]];
-	
-var data4=[[gd(2015, 1, 28), 83], [gd(2015, 2, 4), 58], [gd(2015, 2, 11), 99], [gd(2015, 2, 25), 74],
-    [gd(2015, 3, 4), 175], [gd(2015, 3, 11), 97]];
-	 
-	 */
-
- var tableData = [[" ", "10/9", "10/6","10/8"], //headers
-                ["Temp", "2", "3","6"], 
-                ["Perm", "4", "5","6"], 
-                ["Error", "8", "9","6"],
-				["Total","10","11","12"]
-				]; 
-
-				
-var toDate ,fromDate;
-var a,b;
 
 
-
-/* var dataset2 = [
-     { label: "Total",
-          data: data1,
-          color: "#3c8dbc",
-		  points: { symbol: "circle"} },
-		  
-		  { label:"Temporary",
-		  data :data3,
-		  color:"#7CFC00",
-		  points:{symbol:"square"}
-		 },
-		 { label:"Permanent",
-		  data :data4,
-		  color:"#00c0ef",
-		  points:{symbol:"circle"}
-		 },
-    { label: "Errors",
-          data: data2,
-          color: "#DC143C",
-		  points: { symbol: "triangle"} 
-		  
-		  }
-]; */
-
-
-
-
-
-
-
-function gd(year, month, day) {
-
-	
-    return new Date(year,month-1,day).getTime();
-	
-	
-	
-}
-
+ 
+			
+var toDate=0,fromDate=0,count=0,countTable=0;
+var dateVal=[] , regTable=[];
+var graphId,tableId;
 var previousPoint = null, previousLabel = null;
+var data1 =[,];
+var data2 = [,];
+var data3=[,];
+var data4=[,];
+
+var reg_total =['6743','7918','8317','8660','7590','14976','15331','15382'];
+var reg_success=['6714','7861','8274',	'8493',	'7567',	'14932','15289','15380'];
+ 
+var unlock_perm =['6787','7918','8317','8660','7590','14976'];
+var unlock_temp=['6752','7861','8274',	'8493',	'7567',	'14932'];
+var unlock_perm_eligible;
+var unlock_temp_eligible;
+
 var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+ var regDataset = [
+     { label: "Total",
+          data:data1 ,
+          color: "#3c8dbc",
+		  points: { symbol: "square"} },
+		  
+		  { label:"Success",
+		  data :data2,
+		  color:"#7CFC00",
+		  points:{symbol:"circle"}
+		 }];
+		 
+var unlockDataset = [
+     { label: "Perm",
+          data:data3 ,
+          color: "#3c8dbc",
+		  points: { symbol: "triangle"} },
+		  
+		  { label:"Temp",
+		  data :data4,
+		  color:"#7CFC00",
+		  points:{symbol:"circle"}
+		 }];
+		 
+var options = {
+    series: {
+        shadowSize: 0,
+            lines: {
+              show: true
+            },
+            points: {
+              show: true
+            }
+    },
+    xaxis: {
+	    
+        mode: 'time',
+		//tick: ticks,
+		tickSize: [7,'day'],        
+       //tickLength: 3,
+		axisLabel:"" ,
+        axisLabelUseCanvas: true,
+        axisLabelFontSizePixels: 10,
+        axisLabelFontFamily: 'Verdana, Arial',
+        axisLabelPadding: 10
+    },
+    yaxis: {
+			
+            axisLabel: "",
+            axisLabelUseCanvas: true,
+            axisLabelFontSizePixels: 10,
+            axisLabelFontFamily: 'Verdana, Arial',
+            axisLabelPadding: 3,
+            tickFormatter: function (v, axis) {
+                return $.formatNumber(v, { format: "#,###"});
+            }
+        },
+    legend: {
+        noColumns: 1,
+        labelBoxBorderColor: "#000000",
+        position: "nw-resize"
+   },
+	lines: {
+            fill: false,
+            color: ["#3c8dbc", "#f56954"]
+          },
+    grid: {
+            hoverable: true,
+            borderColor: "#633200",
+            borderWidth: 1,
+            tickColor: "#f3f3f3"
+			
+			
+    },
+    colors: ["#FF0000", "#0022FF"]
+};
+
 
 
 
@@ -89,6 +116,36 @@ function makeTable(tableData,ntableId) {
 	
    
 }
+// ***********function to create table dataSet
+function createTable(dateVal){
+	var regSuccess=[],regTotal=[],dateTable=[];
+	
+dateTable[0]='';
+for(var i=0;i<dateVal.length;i++){
+	var d=new Date(dateVal[i]);
+	var day=d.getDate();
+	var month=d.getMonth()+1;
+	var dt=day+'/'+month;
+	dateTable[i+1]=dt.toString();
+console.log('dateTable[i]'+dateTable[i+1]);
+}	
+
+
+regSuccess[0]='Success';
+for(var j=0;j <dateVal.length ;j++){
+	regSuccess[j+1]=reg_success[j];
+}
+
+regTotal[0]='Total';
+for(var j=0;j <dateVal.length ;j++){
+	regTotal[j+1]=reg_total[j];
+}
+
+
+regTable[0]=dateTable;
+regTable[1]=regSuccess;
+regTable[2]=regTotal;
+}
 
 
 // *********Date Picker
@@ -96,12 +153,12 @@ function makeTable(tableData,ntableId) {
 
  $(function() {
     $( "#from" ).datepicker({
-      defaultDate: "+1w",
+      defaultDate: "-1w",
       changeMonth: true,
       numberOfMonths: 2,
 	 
       onClose: function( selectedDate ) {
-        $( "#to" ).datepicker( "option", "minDate", selectedDate );
+        $( "#from" ).datepicker( "option", "minDate", selectedDate );
       }
     });
     $( "#to" ).datepicker({
@@ -109,7 +166,7 @@ function makeTable(tableData,ntableId) {
       changeMonth: true,
       numberOfMonths: 2,
       onClose: function( selectedDate ) {
-        $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+        $( "#to" ).datepicker( "option", "maxDate", selectedDate );
       }
     });
   });
@@ -119,42 +176,45 @@ function makeTable(tableData,ntableId) {
  $("#submit-btn").click(function (){
  toDate=$("#to").val();
  fromDate=$("#from").val();
-		if(toDate == null || fromDate == null){
+ console.log("toDate"+toDate);
+		console.log("fromDate"+fromDate);
+		
+		if(toDate == '' || fromDate == ''){
+			console.log('value is null');
 		alert("Please enter the date");
 		}
 		
 		
-		if(toDate!=null&& fromDate!=null){
-			if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"||$("#search-btn").val()!=null){
- 
-				//method to pass the selected date values
-					// document.location.reload();
-			}
+		if(toDate!= '' && fromDate!= ''){
+			
+			if($("#sel1").val() == 'All' ||$("#sel1").val()=='Production'||$("#sel1").val()=='Test'||$("#serachByTacCode").val()!= ''){
+					console.log("into if loop of submit button");
+					dateVal=createDate(fromDate,toDate);
+					createTable(dateVal);
+					createGraphs();
+			 }
 		}
  
  
  });
-var tacCode=[12345678,45678901,34567890];
-		var count=1;
-		var countTable=1;
-		var graphId;
-		var tableId;
-		var tacCodeVal=[];
+
+		
+		
 		
 function createGraphId(){
-	graphId=count++
-	return graphId ;
+		graphId=++count;
+		return graphId ;
 }
 		
 function createTableId(){
-	tableId=countTable++;
-	return tableId;
+		tableId=++countTable;
+		return tableId;
 }
 
-	//************ Search TacCode button
+	//************ Search  button
 $("#search-btn").click(function(){
 
-	tacCodeVal[0]=$("#serachByTacCode").val();
+	/* tacCodeVal[0]=$("#serachByTacCode").val();
 
 	if(tacCodeVal[0].length==8){
 		count=1;
@@ -162,7 +222,7 @@ $("#search-btn").click(function(){
 		createContainer(tacCodeVal,dataset,tableData);
 	}else{
 		window.alert("Enter a valid TacCode");
-	}
+	} */
 });
 
 //**** Drop down Click
@@ -171,23 +231,90 @@ $("#sel1").click(function(){
 		// getTacCodes();
 		
 		if($("#sel1").val() == "All" ||$("#sel1").val()=="Production"||$("#sel1").val()=="Test"){
-			count=1;
-			countTable=1;
-			createContainer(tacCode,dataset,tableData);
+			
+			dateVal=createDate(fromDate,toDate);
+	
+			createTable(dateVal);
+			createGraphs();
+			
 	}
 });
 
-
+ /* var ticks = [];
+for (var i = 0; i < dateVal.length; i++) {
+	console.log( new Date(dateVal[i]));
+  ticks.push(dateVal[i]); 
+}
+  */
 // happens when page loads
 $( document ).ready(function() {
-  getTacCodesTotal("total"); // need to call function to
-  
- //call to createGraphs
- createGraphs();
-  
-  
-  
+ // getTacCodesTotal("total"); // need to call function to
+			
 });
+
+//function to create dates for a range of 7 weeks
+
+function createDate(fromDate,toDate){
+	
+	var today=new Date() ;
+	var newEndDate,newStartDate;
+	var  formattedDate=[];	
+	console.log('fromDate'+fromDate);
+	console.log('toDate'+toDate);
+
+	if((fromDate != '' && toDate != '')|| (fromDate != 0 && toDate != 0)) {
+		
+		today=new Date(fromDate);
+		endDate= new Date(toDate);
+		newStartDate=calculateWednesday(today);
+		newEndDate= calculateWednesday(endDate);
+		var i=0;
+		 while(newStartDate <= newEndDate){
+			
+			 formattedDate[i]=newStartDate.getTime();
+			console.log('formattedDate[i]'+formattedDate[i]);
+			newStartDate=new Date(newStartDate.getTime()+ 7*24*60*60*1000);
+			console.log('newStartDate'+newStartDate);
+			i++;
+			} 
+		}else{
+		
+		for(var i=7;i>=0;i--){
+		var dateVal=calculateWednesday(today);
+		formattedDate[i]=dateVal.getTime();
+		today=new Date(dateVal.getTime() - 7*24*60*60*1000 );
+		console.log('formattedDate[i]'+formattedDate[i]);
+		}
+	}
+	
+	return formattedDate ;
+}
+
+
+function subtractDays(myDate,days) {
+	if(days <3){
+	    return new Date(myDate.getTime() - (days+4)*24*60*60*1000);
+	}else {
+		return new Date(myDate.getTime() - (days-3)*24*60*60*1000);
+	}
+}
+
+function calculateWednesday(date){
+	var lastWednesday;
+	if(date.getDay() < 3){
+		lastWednesday = subtractDays(date, date.getDay());
+		console.log('lastWednesday'+lastWednesday);
+		}else if(date.getDay() > 3){
+		 lastWednesday = subtractDays(date, date.getDay());
+		console.log('lastWednesday'+lastWednesday);	
+		}else{
+			console.log("today.getDate()"+date.getDate());
+		 lastWednesday=date;	
+		}
+	
+	return lastWednesday;
+	
+}
 
 /* 			Dexters Section*/
 /*
@@ -277,43 +404,29 @@ function createTacCodeInfo(tacCode,dateRange){
 }
 
 // maybe combine tables and graph into one?
-var formattedDate=[];
-var formateDt;
 
-var data1 =[,];
-var data2 = [,];
-var actualDates=['20150311','20150318','20150325','20150401','20150408','20150415','20150422'];
-var count_total =['6743','7918','8317','8660','7590','14976','15331'];
-var count_sucess=['6714','7861','8274',	'8493',	'7567',	'14932','15289'];
- 
 
 function createGraphs(){
-	/*
-		Pass in tac code
-		Call createGraphId// need to create Id from tac Code to target ?
-		
-		Pass in Array of 7 weeks
-		pass in array of Count from Ajax
-		
-		Pass into flot
-		Add to ID generated
-	*/
-
-  convertToFormattedDate(actualDates);
- 	data1 =  dataSet(formattedDate,count_total);
-	data2 =  dataSet(formattedDate,count_sucess);
+	 
+ 	data1 =  dataSet(dateVal,reg_total);
+	data2 =  dataSet(dateVal,reg_success);
 
 	regDataset[0].data = data1;
 	regDataset[1].data = data2;
+	
+	data3 =dataSet(dateVal,unlock_perm);
+	data4=dataSet(dateVal,unlock_temp);
+	
+	unlockDataset[0].data=data3;
+	unlockDataset[1].data=data4;
 
-createContainer(regDataset,tableData);
+createContainer();
 	
 }
 
-// function to convert stringdate to formatted date for ploting
+// function to convert stringdate to formatted date for plotting
 
-function convertToFormattedDate(actualDates){
-	console.log("call to convertToFormatteddates");
+/* function convertToFormattedDate(actualDates){
 	
 	if(actualDates.length>0){
 		for(var i=0;i<actualDates.length;i++){
@@ -323,21 +436,20 @@ function convertToFormattedDate(actualDates){
 	formattedDate[i]=gd(year,month,dt);
 	}
 	}
-}
+} */
 
 
 //function to create datasets
-function dataSet(formattedDate,count_total){
-	
+function dataSet(formattedDate,count_val){
 	var year,month,dt;
 	var plotData=[,];
 	
-	if(formattedDate.length >0 && count_total.length >0){
-		for(var j=0;j<formattedDate.length;j++){
-	var formatDt=parseInt(formattedDate[j]);
-	var tot=parseInt(count_total[j]);
+	if(formattedDate.length > 0 && count_val.length > 0){
+	for(var j=0;j<formattedDate.length;j++){
+	var formatDt=formattedDate[j];
+	var tot=count_val[j];
 	plotData[j]=[formatDt,tot];
-	console.log("plotData[j]"+plotData[j]);
+	console.log('plotData[j]'+plotData[j]);
 		}
 
 	}	
@@ -347,72 +459,6 @@ return plotData
 function createTables(){
 
 }
-
-	 
-	 
-	 var regDataset = [
-     { label: "Total",
-          data:data1 ,
-          color: "#3c8dbc",
-		  points: { symbol: "circle"} },
-		  
-		  { label:"Success",
-		  data :data2,
-		  color:"#7CFC00",
-		  points:{symbol:"square"}
-		 }];
-
-var options = {
-    series: {
-        shadowSize: 0,
-            lines: {
-              show: true
-            },
-            points: {
-              show: true
-            }
-    },
-    xaxis: {
-	    
-        mode: "time",
-        tickSize: [7,"day"],        
-        tickLength: 0,
-        axisLabel: "",
-        axisLabelUseCanvas: true,
-        axisLabelFontSizePixels: 10,
-        axisLabelFontFamily: 'Verdana, Arial',
-        axisLabelPadding: 10
-    },
-    yaxis: {
-			
-            axisLabel: "",
-            axisLabelUseCanvas: true,
-            axisLabelFontSizePixels: 10,
-            axisLabelFontFamily: 'Verdana, Arial',
-            axisLabelPadding: 3,
-            tickFormatter: function (v, axis) {
-                return $.formatNumber(v, { format: "#,###"});
-            }
-        },
-    legend: {
-        noColumns: 1,
-        labelBoxBorderColor: "#000000",
-        position: "nw-resize"
-   },
-	lines: {
-            fill: false,
-            color: ["#3c8dbc", "#f56954"]
-          },
-    grid: {
-            hoverable: true,
-            borderColor: "#633200",
-            borderWidth: 1,
-            tickColor: "#f3f3f3"
-			
-			
-    },
-    colors: ["#FF0000", "#0022FF"]
-};
 
 
 $.fn.UseTooltip = function () {
@@ -469,46 +515,78 @@ function showTooltip(x, y, color, contents) {
     }).appendTo("body").fadeIn(200);
 }
 	 
-	 function createContainer(regDataset,tableData){
-				//	$("#tacCode1").empty();
+	 function createContainer(){
 					
+		$("#tacCode1").empty();			
 	
-	$("#tacCode1").append("<div class='panel panel-default'>"
+	$("#tacCode1").append("<br>"
+	+"<div class='panel panel-default'>"
 	+"<div class='panel-heading'><b>"
 	+"Registration"+"</b></div>"
 	+ "<div class='panel-body'>"
 	
-	+"<div class='row'>"
-	
-	+"<div class='col-md-6'>"
+	+"<div class='row'>"	
+	+"<div class='col-md-7'>"
 	
 	+"<div  id='flot-placeholder"+createGraphId()+"'style='height:300px ;width:500px'> </div>"
 	+"</div>"
-	+"<div class='col-md-4'>"
-	+ "<div class='table-responsive' style='width:200px,height :100px'>"
+	
+	+"<div class='col-md-3'>"
+	+ "<div class='table-responsive' style='width:200px,height :400px'>"
 	+"<br>"
 	+"<br>"
 	+"<br>"
 	+"<table id='table-placeholder"+createTableId()+"'class='table table-bordered table-hover table-striped'>"
 	
+	+"</table>"
+	+"</div> </div> </div> </div> </div> </div>"
+	
+	+"<br>"
+	+"<div class='panel panel-default'>"
+	+"<div class='panel-heading'><b>"
+	+"Unlock"+"</b></div>"
+	+ "<div class='panel-body'>"
+	
+	+"<div class='row'>"	
+	+"<div class='col-md-7'>"
+	
+	+"<div  id='flot-placeholder"+createGraphId()+"'style='height:300px ;width:500px'> </div>"
+	+"</div>"
+	
+	+"<div class='col-md-3'>"
+	+ "<div class='table-responsive' style='width:200px,height :400px'>"
+	+"<br>"
+	+"<br>"
+	+"<br>"
+	+"<table id='table-placeholder"+createTableId()+"'class='table table-bordered table-hover table-striped'>"
 	
 	);
 	
 	
 			var graphCount = graphId;
-			console.log("graphId"+graphCount)
 			
-			for(var j = 0; j < graphCount; j++){
+			for(var j =1; j <= graphCount; j++){
 			
 				console.log("the value of j"+j);
-				
-				$.plot(("#flot-placeholder"+(j+1)),regDataset,options);
-				$("#flot-placeholder"+(j+1)).UseTooltip();
-				makeTable( tableData,$("#table-placeholder"+(j+1)));
+				if(j==1){
+				$.plot(("#flot-placeholder"+(j)),regDataset,options);
+				$("#flot-placeholder"+(j)).UseTooltip();
+				makeTable( regTable,$("#table-placeholder"+(j)));
 				 
-				
+				}/*else if(j==2){
+					$.plot(("#flot-placeholder"+(j)),unlockDataset,options);
+				$("#flot-placeholder"+(j)).UseTooltip();
+				makeTable( regTable,$("#table-placeholder"+(j)));
+					
+				} else if( j==2){
+					$.plot(("#flot-placeholder"+(j+1)),regDataset,options);
+				$("#flot-placeholder"+(j+1)).UseTooltip();
+				makeTable( regTable,$("#table-placeholder"+(j+1)));	
+					
+				} */
 				
 			}
 			
-			
+			count=0;
+			countTable=0;
  }
