@@ -240,6 +240,7 @@ $("#sel1").click(function(){
 	}
 });
 
+<<<<<<< HEAD
  /* var ticks = [];
 for (var i = 0; i < dateVal.length; i++) {
 	console.log( new Date(dateVal[i]));
@@ -317,99 +318,145 @@ function calculateWednesday(date){
 }
 
 /* 			Dexters Section*/
+=======
+
+
+
+// happens when page loads
+$( document ).ready(function() {
+	// Might need to do call to file to get array of lab/ Production
+	//if file is todays date use it #10:30am is when its created
+	allTacCodes = new Array();
+	getTacCodesTotal("total"); // Maybe return function
+	
+	//getTacCodesTotal("lab");
+	//getTacCodesTotal("production");
+  
+});
+
+/* Dexters Section*/
+>>>>>>> origin/master
 /*
 Call at start of page
 Ajax to getTacCodes
-Store in array ?
+Store in array 
 for each for Tac Code List
 */
 function getTacCodesTotal(type){
 
-	
 	//read production and lab file. Create an Array. key value? Dname-> tac, or Tac -> Dname
-	/*var allTacCodes = new Array();
-	$.post('getTacCodes.php', 'val=getTacCodes' , function (data) {
-		console.log( data); // clear tables or run function
-		allTacCodes = data;
-		
-		if(type == "total"){
-			createTacCodeInfo("","");
-		}else{
-		
-			for(var i = 0; i < data.length; i++){
-				//console.log(data[i]);
-				// If/else depending on what option was checked. Compare values to ones in lab/production array. 
-				
-				// IF new add it to lab
-				
-				// need array for lab and array for production
-				createTacCodeInfo(data[i],"");
-			}
+	// maybe adjust 0's by amount of weeks
+	registrationTotal = [0,0,0,0,0,0,0,0,0,0];
+	registrationSuccess = [0,0,0,0,0,0,0,0,0,0];
 
-	},'json');
+	tempTotal = [0,0,0,0,0,0,0,0,0,0]; // for table
+	tempSuccess = [0,0,0,0,0,0,0,0,0,0]; // temp Yes, for graph
+	permTotal = [0,0,0,0,0,0,0,0,0,0]; // for table, perm Total
+	permSuccess = [0,0,0,0,0,0,0,0,0,0]; // perm Yes, for graph
+
+	permFail = [0,0,0,0,0,0,0,0,0,0]; // perm fail
+	tempFail = [0,0,0,0,0,0,0,0,0,0]; // temp fail
+	peFail = [0,0,0,0,0,0,0,0,0,0]; // PE error
+	regFail = [0,0,0,0,0,0,0,0,0,0]; // reg fail PE error
 	
-	console.log(allTacCodes);*/
+	if(type == "total"){
+			createTacCodeInfo("","20150315","20150415"); // 7 weeks total
+			setTimeout(function () {
+				createGraphs();
+				}, 5500);
+		
+			// need to have it wait for the previous function to finish
+
+	}else{ 
+		$.post('getTacCodes.php', 'val=getTacCodes' , function (data) {
+			console.log( data); 
+			allTacCodes = data; // get Tac code List
+			
+			if(type == "production"){
+				//length of production array
+				for(var i = 0; i < data.length; i++){
+					//console.log(data[i]);
+
+					//createTacCodeInfo(data[i],"20150412","20150415");
+				}
+			}else if(type == "lab"){ //else  lab 
+				for(var i = 0; i < data.length; i++){
+					//console.log(data[i]);
+					// IF new Tac Code add it to lab File
+					// 
+					createTacCodeInfo(data[i],"20150412","20150415");					
+				}
+			}
+			createGraphs();
+			
+		},'json');		
+	}
 }	
 
+// Create arrays of count from queries
+function createTacCodeInfo(tacCode,dateStart,dateEnd){
 
-function createTacCodeInfo(tacCode,dateRange){
+	var arrayDateIndex = 0;
+	// changes dates to length, might need -1
 
-	console.log(tacCode + " I was called");
-	
-	// get date range ***
-	// get array back [ 20150707,20150711 ]
-	// Ajax call for X many weeks, Array of dates
-	
-	//for(var i = 0; i < date array.length; i++){ // not by data length, thats too many times.
-	
-	$.post('queryScript.php', {val:"q1", imei: tacCode,startDate: "20150407",endDate: "20150417"} , function (data) {
-		console.log( data); // clear tables or run function		
+	for(var i = 0; i < 7; i++){
 		
-		
-		// check if its in lab or production?
-		// need array for lab and array for production	
-		
-	}); //,'json'); // add this later
-	
-	
-	// array of count
-	// array of dates/weeks
-	
-	
-	// create graph/table
-	
-	
-	/*
-	for each week in array{
+		// change
+		$.post('queryScript.php', {val:"q1", imei: tacCode,startDate: actualDates[i],endDate: actualDates[i+1] } , function (data) {	
+			console.log(data[0]  + " and  "+ data[9]);
+			
+			registrationTotal[arrayDateIndex] += parseInt(data[0]);	// Total
+			registrationSuccess[arrayDateIndex] += parseInt(data[1]); // Success
 
-		Ajax call each?
-		query1
-		query2
-		query3
-	
-		
-		createGraphs(query1)
-		createTables(query1)
-		
-		createGraphs(query2)
-		createTables(query2)
-		
-		createGraphs(query3)
-		createTables(query3)
+			tempTotal[arrayDateIndex] += parseInt(data[2]);
+			tempSuccess[arrayDateIndex] += parseInt(data[3]) 
 
-
+			console.log(tempTotal + 'the index is ' + arrayDateIndex  );
+			// console.log('the data is: ' + data + 'the index is ' + arrayDateIndex  );
+			// console.log(actualDates[arrayDateIndex] + 'and the end date is  ' + actualDates[arrayDateIndex+1]  );
+			
+			permTotal[arrayDateIndex] += parseInt(data[4]) 
+			permSuccess[arrayDateIndex] += parseInt(data[5]) 
+			
+			permFail[arrayDateIndex] += parseInt(data[6])
+			tempFail[arrayDateIndex] += parseInt(data[7])
+			peFail[arrayDateIndex] += parseInt(data[8]) 
+			regFail[arrayDateIndex] += parseInt(data[9]) 
+			
+			arrayDateIndex++;
+		
+		},'json'); 
 	}
-*/
+}
+
+
+function createTables(A1,A2,A3,A4,tacCode,location,dateStart,dateEnd){
+	// alert("booyah Tables");
 
 }
 
 // maybe combine tables and graph into one?
 
+<<<<<<< HEAD
 
 function createGraphs(){
 	 
  	data1 =  dataSet(dateVal,reg_total);
 	data2 =  dataSet(dateVal,reg_success);
+=======
+var data1 =[,];
+var data2 = [,];
+var  actualDates = ['20150304','20150311','20150318','20150325','20150401','20150408','20150415','20150422'];
+var count_total =['6743','7918','8317','8660','7590','14976','15331'];
+var count_sucess=['6714','7861','8274',	'8493',	'7567',	'14932','15289'];
+ 
+
+function createGraphs(){
+
+  convertToFormattedDate(actualDates);
+ 	data1 =  dataSet(formattedDate,registrationTotal);
+	data2 =  dataSet(formattedDate,registrationSuccess);
+>>>>>>> origin/master
 
 	regDataset[0].data = data1;
 	regDataset[1].data = data2;
@@ -420,7 +467,11 @@ function createGraphs(){
 	unlockDataset[0].data=data3;
 	unlockDataset[1].data=data4;
 
+<<<<<<< HEAD
 createContainer();
+=======
+	createContainer(regDataset,tableData);
+>>>>>>> origin/master
 	
 }
 
@@ -430,11 +481,11 @@ createContainer();
 	
 	if(actualDates.length>0){
 		for(var i=0;i<actualDates.length;i++){
-	var year=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$1');
-	var month=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$2');
-	var dt=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$3');
-	formattedDate[i]=gd(year,month,dt);
-	}
+			var year=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$1');
+			var month=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$2');
+			var dt=actualDates[i].replace(/(\d{4})(\d{2})(\d{2})/g, '$3');
+			formattedDate[i]=gd(year,month,dt);
+		}
 	}
 } */
 
@@ -444,20 +495,26 @@ function dataSet(formattedDate,count_val){
 	var year,month,dt;
 	var plotData=[,];
 	
+<<<<<<< HEAD
 	if(formattedDate.length > 0 && count_val.length > 0){
 	for(var j=0;j<formattedDate.length;j++){
 	var formatDt=formattedDate[j];
 	var tot=count_val[j];
 	plotData[j]=[formatDt,tot];
 	console.log('plotData[j]'+plotData[j]);
+=======
+	if(formattedDate.length >0 && count_total.length >0){
+		for(var j=0;j<formattedDate.length;j++){
+			var formatDt=parseInt(formattedDate[j]);
+			var tot=parseInt(count_total[j]);
+			plotData[j]=[formatDt,tot];
+			console.log("plotData[j]"+plotData[j]);
+>>>>>>> origin/master
 		}
 
 	}	
-return plotData	
+	return plotData	
 	
-}
-function createTables(){
-
 }
 
 
