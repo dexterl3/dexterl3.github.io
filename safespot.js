@@ -1,22 +1,29 @@
-// Dexters Maps
 
 
-$(document).ready(function(){
-  alert("abc");
-	initMap();
+$(document).ready(function() {
+  
+alert("abc");
+        $('#fetch').click( function(){ 
+          alert("abc2");
+         // initMap();
+          alert("abc3");
+        }); 
+         
 });
 
 function initMap() {
-  var myLatLng = {lat: -25.363, lng: 131.044};
-
-  var map = new google.maps.Map(document.getElementById('map'), {
-    zoom: 4,
-    center: myLatLng
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 47.607, lng: -122.644},
+    zoom: 8
   });
 
+alert(document.getElementById('map');
+ // MAP = map;
+/*
   var marker = new google.maps.Marker({
     position: myLatLng,
     map: map,
     title: 'Hello World!'
   });
+*/
 }
