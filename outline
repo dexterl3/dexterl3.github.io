@@ -1,4 +1,108 @@
 outline:
 
 Quad tree implementation
+http://www.mikechambers.com/blog/2011/03/21/javascript-quadtree-implementation/
+https://github.com/mikechambers/ExamplesByMesh/blob/master/JavaScript/QuadTree/src/QuadTree.js
 Data migration
+http://blog.ionic.io/creating-an-ionic-app-with-mysql-and-backand/
+http://redwanhilali.com/ionic-sqlite/
+https://forum.ionicframework.com/t/open-a-sqlite-database/17014/5
+https://blog.nraboy.com/2015/01/deploy-ionic-framework-app-pre-filled-sqlite-db/
+http://nextflow.in.th/en/2015/easy-way-to-work-with-sqlite-database-in-ionic-framework/
+
+
+http://learn.ionicframework.com/formulas/localstorage/
+
+Load data
+load DB
+  for(NSArray *s in signs){
+            i++; //?
+            dataArray[i] = TBDataFromLine(s);
+
+float latitude = (float) [s[35] floatValue];
+    float longitude = (float) [s[36]floatValue];
+    
+    TBParkingInfo* parkingInfo = malloc(sizeof(TBParkingInfo));
+    
+    NSString *streets =  s[21]; // maybe change length to -4 ?
+    parkingInfo->streetName = malloc(sizeof(char) * streets.length ); //
+    strncpy(parkingInfo->streetName, [streets UTF8String], streets.length );
+    
+    NSString *parkingStreet = s[20];
+    NSString *pt = s[19]; // RPZ, blah blah type name
+
+    parkingInfo->parkType = malloc(sizeof(char) * pt.length + 1);
+    strncpy(parkingInfo->parkType, [pt UTF8String], pt.length + 1);
+    
+    parkingInfo->restrictions = malloc(sizeof(char) * parkingStreet.length + 1);
+    strncpy(parkingInfo->restrictions, [parkingStreet UTF8String], parkingStreet.length + 1);
+
+
+    // 79515 sets it to 1-1 ._.
+    // ~700, might need to find a hotfix/hard code those points in?
+    
+
+    //15TH AVE S 0320 BLOCK W SIDE ( 247) 247 FT S/O S HANFORD ST (R7-NP )
+    // http://stackoverflow.com/questions/6825834/objective-c-how-to-extract-part-of-a-string-e-g-start-with
+
+    // NSString *details =  s[32]; // more on the restrictions
+
+    parkingInfo->startHour = -100;
+    parkingInfo->endHour = -100;
+    parkingInfo->startDay = -100;
+    parkingInfo->endDay = -100;
+    
+    if( s[33] != [NSNull null]){
+        parkingInfo->startHour =  (int) [s[33] integerValue];
+        //NSLog(@"%d",startHour);
+    }
+    
+    if( s[34] != [NSNull null]){
+        parkingInfo->endHour =  (int) [s[34] integerValue];
+        //NSLog(@"%d",endHour);
+    }
+    
+    if( s[31] != [NSNull null]){
+        parkingInfo->startDay =  (int) [s[31] integerValue];
+    }
+    
+    
+    if( s[32] != [NSNull null]){
+        parkingInfo->endDay =  (int) [s[32] integerValue];
+    }
+
+    // maybe make Restriction have Restrictions( or some other name) so one holds the streets restrictions
+    // Restrictions have startDay/Hour and endDay/Hour and custom Text
+    
+    return TBQuadTreeNodeDataMake(latitude, longitude, parkingInfo);
+
+/ Parking Categories with Boolean Values for Parking
+- (NSMutableDictionary *)parkingDictionary
+{
+    NSMutableDictionary *parkingTypes = [[NSMutableDictionary alloc] init];
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1530"];  // Parking - 15 or 30 minutes
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"P1H"];    // Parking - 1 Hour or more
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBLO"];    // Bus Layover Signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PBZ"];     // Bus Zone
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PCARPL"]; // Carpool signed parking
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PCVL"];    // Commercial Vehicle Load Zones
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PDIS"];   // Disabled Parking Signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PGA"];     // Exempt vehicles, Police etc.
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PINST"];   // Geographic directional signs
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PLU"];     // 15 or 30 minute load zones, may be paid
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNP"];     // No Parking, but "standing" allowed
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PNS"];     // No stopping, standing or parking
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPEAK"];  // Peaking Parking Restrictions, TOW
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PPL"];     // 3 minute passenger load zone
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PPP"];    // short term paid parking btw 15 min - 4 hours
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PR"];      // Parking Regulatory
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PRZ"];    // Restricted Parking Zone permited parking
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PS"];      // Pay Stations
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PSCH"];    // School Bus or Load
+    [parkingTypes setValue:[NSNumber numberWithBool:YES] forKey:@"PTIML"];  // Short term parking 15, 30 minute or 1-4 hours
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PTRKL"];   // 30 minute truck load/unload zones
+    [parkingTypes setValue:[NSNumber numberWithBool:NO] forKey:@"PZONE"];   // Includes charter bus, event, etc.
+    
+    return parkingTypes
+
+    https://github.com/nyadav810/SafeSpot/blob/master/SafeSpot/SafeSpot/DetailViewController.m
