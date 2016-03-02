@@ -139,3 +139,63 @@ angular.module('starter', ['ionic'])
     }
   });
 })
+
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
+
+.run(function($ionicPlatform, $cordovaSQLite, $rootScope){
+$ionicPlatform.ready(function(){
+if(window.cordova && window.cordova.plugins && window.cordova.plugins.Keyboard){
+  cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+}
+if(window.StatusBar){
+  StatusBar.styleDefault();
+}
+  $rootScope.db = $cordovaSQLite.openDB("my.db");
+  // if I have a pre populated DB
+  //$rootScope.db = window.sqlitePlugin.openDatabase( {name: "jokes.db", createFromLocation: 1} );
+  //  put your Ionic SQLite database in your www.
+  //https://blog.nraboy.com/2015/01/deploy-ionic-framework-app-pre-filled-sqlite-db/
+  $cordovaSQLite.execute(db,"CREATE TABLE IF NOT EXISTS joke(id integer primary key, joke text )");
+
+  
+angular.module('starter.services', [])
+ 
+.factory('Jokes', function($cordovaSQLite) {
+ 
+var jokes = [];
+ 
+return {
+all: function() {
+ 
+ 
+$cordovaSQLite.execute(db, "SELECT * FROM joke")
+.then(function(res){
+for(var i = 0; i < res.rows.length; i++){
+jokes.push(res.rows.item(i));
+}
+},
+function(err){ 
+console.log("Error");
+})
+ 
+return jokes;
+},
+remove: function(jokeId) {
+$cordovaSQLite.execute(db, "DELETE FROM joke WHERE id=?", [jokeId])
+.then(function(res){
+console.log("Deleted");
+},
+function(err){ 
+console.log("Error");
+})
+ 
+}
+};
+});  
+
+})
+
+
+})
+
+  
