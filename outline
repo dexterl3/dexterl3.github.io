@@ -13,6 +13,11 @@ http://nextflow.in.th/en/2015/easy-way-to-work-with-sqlite-database-in-ionic-fra
 
 http://learn.ionicframework.com/formulas/localstorage/
 
+
+https://docs.mongodb.org/manual/reference/operator/query/geoWithin/#op._S_geoWithin
+http://ilessendata.blogspot.com/2015/04/mongodb-vs-postgresql-for-geo-queries.html
+http://postgis.net/
+http://mherman.org/blog/2015/02/12/postgresql-and-nodejs/#.VtiuIubz7wA
 Load data
 load DB
   for(NSArray *s in signs){
