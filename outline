@@ -1,3 +1,18 @@
+
+Log:
+learned about objects
+create collection and use mongo import on signs.csv
+mongoimport -d test -c things --type csv --file locations.csv --headerline
+
+loaded CSV into MONGO db(on desktop try shutdown of mongo if service is lame)
+
+Added bower/git
+
+added angualr google maps, bower install angular-google-maps
+add     
+<script src='angular-google-maps.min.js'></script> to index
+
+
 outline:
 
 Quad tree implementation
