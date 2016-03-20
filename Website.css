@@ -6,8 +6,8 @@
 .parallaxParent > * {
 	height: 200%;
 	position: relative;
-	top: -73%;
-	background-size: cover;
+	top: -76%;
+
 }
 
 .insidePar{
@@ -25,4 +25,8 @@ padding: auto;
 
 body{
 	background-color: white;
+}
+
+.navbar{
+	margin-bottom: 0px;
 }
