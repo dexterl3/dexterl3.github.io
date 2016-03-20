@@ -1,14 +1,28 @@
 .parallaxParent {
-	height: 150vh;
+	height: 100vh;
 	overflow: hidden;
 
 }
 .parallaxParent > * {
 	height: 200%;
 	position: relative;
-	top: -100%;
+	top: -73%;
+	background-size: cover;
 }
 
 .insidePar{
  text-align: center;
+ color: white;
+ outline: black;
+
+ margin: auto;
+ width: 500px;
+ height: 100%;
+ opacity: 0.9;
+background-color: grey;
+padding: auto;
+}
+
+body{
+	background-color: white;
 }
