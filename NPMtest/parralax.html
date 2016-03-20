@@ -40,25 +40,38 @@
 
 <style type="text/css">
 	.parallaxParent {
-		height: 150vh;
+		height: 75vh;
 		overflow: hidden;
 
 	}
 	.parallaxParent > * {
 		height: 200%;
 		position: relative;
-		top: -100%;
+		top: -60%;
 	}
 
+	.insidePar{
+ text-align: center;
+}
 
 </style>
-<div class="spacer s0"></div>
+ 	 	
 <div id="parallax1" class="parallaxParent">
-	<div style="background-image: url(../universe.jpg);"></div>
+
+	<div style="background-image: url(../website.gif);
+	background-repeat: no-repeat;
+	">
+		<h1 class="insidePar">Skills</h1>
+	</div>
+
 </div>
 
 <div class="spacer s1">
 	<div class="box2 blue">
+		<p>Content 1</p>
+		<p>Content 1</p>
+		<p>Content 1</p>
+		<p>Content 1</p>
 		<p>Content 1</p>
 		<a href="#" class="viewsource">view source</a>
 	</div>
@@ -69,7 +82,7 @@
 
 	// build scenes
 	new ScrollMagic.Scene({triggerElement: "#parallax1"})
-					.setTween("#parallax1 > div", {y: "80%",opacity: "0.4", ease: Linear.easeNone})
+					.setTween("#parallax1 > div", {y: "60%", ease: Linear.easeNone})
 					.addTo(controller);
 
 
