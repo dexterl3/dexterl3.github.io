@@ -23,6 +23,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
 	<script src="portfolio.js" type="text/javascript"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js"></script>
 
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -87,12 +88,12 @@
 					<li>Research and Design Methods</li>
 					<li>SEO</li>
 				-->
-		</div>
-			
+		</div>	
 		<!-- maybe link to projects <button id='buw' class="btn btn-primary" role="button">Expand</button>  --> 
 
-			</div>
 		</div>
+	</div>
+
 		<div id="projects">
 			 <h1>Projects</h1>
 				<!-- maybe link to projects-->
@@ -104,11 +105,21 @@
 					<li>Color Picker</li>
 					<li>Memory Game</li>
 
+					<li>Spacer</li>
+					<li>Memory Game</li>
+
+					<li>Color Picker</li>
+					<li>Memory Game</li>
+
+					<li>Spacer</li>
+					<li>Memory Game</li>
+
+	
 				</ul>
 
-				
-	    <div id="parallax2" class="parallaxParent">
-			<div style="background-image: url(/dexterl3.github.io/website.gif);">
+
+	    <div id="parallax2" class="parallaxParent2">
+			<div style="background-image: url(/dexterl3.github.io/anime.jpg);">
 				<div class="insidePar">
 
 
@@ -125,13 +136,12 @@
 
 
 			</ul>
-		</div>
-	  </div>
-
 				</div>
-			</div>
+	  		</div>
 		</div>
-	  <hr>
+
+	</div>
+<hr>
       <footer>
         <p>Maintained by Dexter Lesaca III.</p>
       </footer>
@@ -146,15 +156,15 @@
     <script src="https://code.jquery.com/jquery.js"></script>
   <script>
 	// init controller
-	var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "200%"}});
+	var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "50%"}});
 
 	// build scenes
 	new ScrollMagic.Scene({triggerElement: "#parallax1"})
-					.setTween("#parallax1 > div", {y: "80%", ease: Linear.easeNone})
+					.setTween("#parallax1 > div", {  ease: Linear.easeNone})
 					.addTo(controller);
 
-	new ScrollMagic.Scene({triggerElement: "#parallax1"})
-					.setTween("#parallax2 > div", {y: "80%", ease: Linear.easeNone})
+	new ScrollMagic.Scene({triggerElement: "#parallax2"})
+					.setTween("#parallax2 > div", {  ease: Linear.easeNone})
 					.addTo(controller);
 
 

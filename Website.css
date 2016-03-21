@@ -4,34 +4,44 @@
 
 }
 .parallaxParent > * {
-	height: 200%;
+	height: 100%;
 	position: relative;
-	top: -70%;
-
+	background-attachment:fixed;
+	top:10%;
 }
 
-.insidePar{
- text-align: center;
- color: white;
- outline: black;
 
- margin: auto;
- width: 500px;
- height: 500px;
- opacity: 0.9;
-background-color: grey;
-padding-top: 50px;
-padding: auto;
+.parallaxParent2 {
+	height: 50vh;
+	overflow: hidden;
+	padding-top: 10px;
+
+}
+.parallaxParent2 > * {
+	height: 200%;
+	position: relative;
+	background-attachment: fixed;
+	background-repeat: no-repeat;	
+}
+
+	
+.insidePar{
+
+	color: white;
+	outline: black;
+	margin: auto;
+	width: 500px;
+	height: 100%;
+	opacity: 0.9;
+	background-color: grey;
+	padding-top: 10px;
 }
 
 body{
 	background-color: white;
+	text-align: center;
 }
 
 .navbar{
 	margin-bottom: 0px;
-}
-
-#projects{
-	text-align: center;
 }
