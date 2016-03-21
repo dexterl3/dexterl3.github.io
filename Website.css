@@ -13,20 +13,25 @@
 
 #face{
   	border-radius: 25px;
-	max-width: 300px;
+	
 	position: relative;
 	float:left; 
   	vertical-align: top;
+  	margin-left: 300px;
 	margin-top: 40px;
 }
 .parallaxParent2 {
-	height: 50vh;
+	height: 48vh;
 	overflow: hidden;
 	padding-top: 10px;
+}
+
+#employer{
 
 }
 .parallaxParent2 > * {
-	
+
+	height:100%;
 	position: relative;
 	background-attachment: fixed;
 	background-repeat: no-repeat;	
@@ -36,7 +41,9 @@
     max-width: 150px;
     display: inline-block;
     vertical-align: top;
-    padding:0 10px;
+    padding:0 10px;.
+
+    http://stackoverflow.com/questions/19827236/bootstrap-3-apply-css-on-mobile-view-only
 }
 */
 	
@@ -46,8 +53,8 @@
 	outline: black;
 	margin: auto;
 
-	width: 400px;
-	height: 57%;
+	width: 300px;  /*want to change for top layer */
+	height: 200px;
 	opacity: 0.9;
 	margin-top: 20px;
 	background-color: grey;
@@ -62,4 +69,15 @@ body{
 
 .navbar{
 	margin-bottom: 0px;
+}
+
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+
+  border-color: white;
+}
+
+@media (max-width: 767px) {
+    /* CSS goes here */
 }

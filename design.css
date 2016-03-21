@@ -4037,7 +4037,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .nav .open > a,
 .nav .open > a:hover,
 .nav .open > a:focus {
-  background-color: #eeeeee;
+  
   border-color: #dd4814;
 }
 
@@ -4747,7 +4747,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-toggle:hover,
 .navbar-default .navbar-toggle:focus {
-  background-color: white;
+
 }
 
 .navbar-default .navbar-toggle .icon-bar {
