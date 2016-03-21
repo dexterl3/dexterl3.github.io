@@ -41,12 +41,12 @@
 */
 	
 .insidePar{
-	display: inline-block;
+	
 	color: white;
 	outline: black;
 	margin: auto;
 
-	width: 40%;
+	width: 400px;
 	height: 57%;
 	opacity: 0.9;
 	margin-top: 20px;
