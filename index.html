@@ -34,25 +34,25 @@
 
   <body>
 
-    <div class="navbar navbar-default navbar-fixed-top"> 
-      <div class="container">
-	  
-        <div class="navbar-header ">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> 
+     <div class="container-fluid" id="navfluid">
+       <div class="navbar-header">
+	       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navigationbar">
+	       <span class="sr-only">Toggle navigation</span>
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+	       <span class="icon-bar"></span>
+      </button>
           <a class="navbar-brand" href="http://dexterl3.github.io/">Dexter Lesaca III</a>
         </div>
-        <div class="navbar-collapse collapse">
+
+        <div class="navbar-collapse collapse" id="navigationbar">
           <ul class="nav navbar-nav">
             <li class="active"><a href="http://dexterl3.github.io/">Home</a></li>
 
 			<li><a href="#projects">Projects</a></li>
 			<li><a href="#employer">Employer</a></li>
             <li><a href="contacts.html">Contact Me</a></li>
-             
              
 			<li> <a href="http://www.github.com/dexterl3"><img src="http://dexterl3.github.io/Images/Github-icon.png"></a></li>
 			<li><a href="http://www.linkedin.com/pub/dexter-lesaca-iii/4b/588/642"><img src="http://dexterl3.github.io/Images/Linkedin-icon.png"></a></li>
@@ -61,7 +61,7 @@
 
         </div><!--/.navbar-collapse -->
       </div>
-    </div>
+    </nav>
 	
 </style>
 	
@@ -71,7 +71,7 @@
 
 <!--  Info about me and picture -->
 	  <div id="parallax1" class="parallaxParent">
-		<div style="background-image: url(/dexterl3.github.io/website.gif);">
+		<div style="background-image: url(/dexterl3.github.io/website.gif);" height="500">
 			 <img id="face"  src="/dexterl3.github.io/selfie.jpg" alt="my face" height="200" weight="200">
 			 <br>
 			<div class="insidePar">
@@ -127,8 +127,6 @@
 					<ul list-style:none>
 						<li>Provide Scripts in Perl and Bash to retrieve and manipulate data</li>
 						<li> Create and run Queries using SQL Developer</li>
-						<li> Use SOAP UI to do Testing</li>
-						<li>Create and Run Test Cases</li>
 
 
 					</ul>
@@ -151,6 +149,7 @@
   <script src="/dexterl3.github.io/dist/js/bootstrap.min.js"></script>
 	-->
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
   <script>
 	// init controller
 	var controller = new ScrollMagic.Controller({globalSceneOptions: {triggerHook: "onEnter", duration: "50%"}});
