@@ -27,7 +27,7 @@
 }
 
 #employer{
-
+	height: 400px;
 }
 .parallaxParent2 > * {
 
@@ -53,7 +53,7 @@
 	outline: black;
 	margin: auto;
 
-	width: 300px;  /*want to change for top layer */
+	width: 400px;  /*want to change for top layer */
 	height: 200px;
 	opacity: 0.9;
 	margin-top: 20px;
@@ -78,6 +78,9 @@ body{
   border-color: white;
 }
 
+
 @media (max-width: 767px) {
-    /* CSS goes here */
+    /* CSS goes here 
+	Need to adjust boxes so they don't extend past the height
+    */
 }
