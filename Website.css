@@ -14,9 +14,7 @@
 
 #face{
   	border-radius: 25px;
-	
 	position: relative;
-
   	vertical-align: top;
     margin-left: 100px; 
 	margin-top: 40px;
@@ -40,7 +38,9 @@
 	background-size: cover ;
 }
 
-
+#projects li{
+	list-style-type:none
+}
 .row {
 	/*
   padding-right: 15px;
@@ -64,14 +64,14 @@
 	color: white;
 	outline: black;
 	margin: auto;
-
-	width: 400px;  /*want to change for top layer */
+	width: 500px;  /*want to change for top layer */
 	height: 200px;
 	opacity: 0.9;
 	margin-top: 20px;
 	background-color: grey;
 	border-radius: 25px;
 	padding-top: 10px;
+
 }
 
 body{
@@ -80,6 +80,9 @@ body{
 	 /* overflow-x:hidden;  Temp fix for width*/
 }
 
+#navigationbar{
+	position:left;
+}
 .navbar{
 	margin-bottom: 0px;
 }
