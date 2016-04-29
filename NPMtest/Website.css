@@ -1,0 +1,102 @@
+.parallaxParent {
+	height: 50vh;
+	overflow: hidden;
+
+}
+.parallaxParent > * {
+	height:100%;
+	position: relative;
+	background-attachment:fixed;
+	background-size: cover ;
+	top: 10%;
+
+}
+
+#face{
+  	border-radius: 25px;
+	position: relative;
+  	vertical-align: top;
+    margin-left: 100px; 
+	margin-top: 40px;
+}
+
+/* Having the same class causes issues with spacing between Projects and Employer
+ */
+.parallaxParent2 {
+	height: 48vh;
+	overflow: hidden;
+	padding-top: 10px;
+}
+
+#employer{
+	height: 400px;
+}
+.parallaxParent2 > * {
+	height:100%;
+	position: relative;
+	background-attachment: fixed;
+	background-size: cover ;
+}
+
+#projects li{
+	list-style-type:none
+}
+.row {
+	/*
+  padding-right: 15px;
+  padding-left: 15px; */
+  margin-right: 0px;
+  margin-left: 0px;
+}
+/*
+.column{
+    max-width: 150px;
+    display: inline-block;
+    vertical-align: top;
+    padding:0 10px;.
+
+    http://stackoverflow.com/questions/19827236/bootstrap-3-apply-css-on-mobile-view-only
+}
+*/
+	
+.insidePar{
+	
+	color: white;
+	outline: black;
+	margin: auto;
+	width: 500px;  /*want to change for top layer */
+	height: 200px;
+	opacity: 0.9;
+	margin-top: 20px;
+	background-color: grey;
+	border-radius: 25px;
+	padding-top: 10px;
+
+}
+
+body{
+	background-color: white;
+	text-align: center;
+	 /* overflow-x:hidden;  Temp fix for width*/
+}
+
+#navigationbar{
+	position:left;
+}
+.navbar{
+	margin-bottom: 0px;
+}
+
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+
+  border-color: white;
+}
+
+
+@media (max-width: 767px) {
+    /* CSS goes here 
+	Need to adjust boxes so they don't extend past the height
+    */
+}

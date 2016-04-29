@@ -20,13 +20,16 @@
     <link href="Website.css" type="text/css" rel="stylesheet" />
 	<script src="http://code.jquery.com/jquery-latest.min.js"
         type="text/javascript"></script>
-	
+ 	  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.js"></script>
+ 	
+ 	<script src="app.js"  type="text/javascript"> </script>
+
 	<script src="//cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/ScrollMagic.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.18.2/TweenMax.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
-	<script src="portfolio.js" type="text/javascript"></script>
+
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.3/plugins/debug.addIndicators.js"></script>
-	 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
+
 
  
 	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -36,7 +39,7 @@
     <![endif]-->
   </head>
 
-  <body>
+  <body ng-app="app">
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation"> 
      <div class="container-fluid" id="navfluid">
@@ -54,9 +57,9 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="http://dexterl3.github.io/">Home</a></li>
 
-			<li><a href="#projects">Projects</a></li>
-			<li><a href="#employer">Employer</a></li>
-            <li><a href="contacts.html">Contact Me</a></li>
+            <li><a href="#projects">Projects</a></li>             <li><a
+href="#employer">Employer</a></li>             <li><a
+href="contacts.html">Contact Me</a></li>
              
 			<li> <a href="http://www.github.com/dexterl3"><img src="http://dexterl3.github.io/Images/Github-icon.png"></a></li>
 			<li><a href="http://www.linkedin.com/pub/dexter-lesaca-iii/4b/588/642"><img src="http://dexterl3.github.io/Images/Linkedin-icon.png"></a></li>
@@ -75,17 +78,19 @@
 
 <!--  Info about me and picture -->
 	  <div id="parallax1" class="parallaxParent">
-		<div style="background-image: url(/dexterl3.github.io/anime.jpg);">
+		<div style="background-image: url(/dexterl3.github.io/anime25.jpg);">
 			 <div > 
 				<img id="face" class="hidden-sm pull-left hidden-xs"  src="/dexterl3.github.io/selfie.jpg" alt="my face" height="200" weight="200">
 			 </div>
 			 <br>
 			<div class="insidePar ">
 
-		   
-		  
-		   <h1 >About Me</h1>
-		   <p> Sorry for the Mess, this site is under construction</p>
+		
+		   <h1>About Me</h1>
+		   <div ng-controller="MessageController"> {{message}} Sorry for the Mess, this site is under construction 
+		   	  Score: {{score.getPoints()}}
+		   	 <button ng-click="increment()">Increment</button>
+		   </div>
 		   	<!-- 
 				<ul>
 					<li>Java</li>
@@ -122,7 +127,7 @@
 
 
 	    <div id="parallax2" class="parallaxParent2">
-			<div style="background-image: url(/dexterl3.github.io/anime.jpg);">
+			<div style="background-image: url(/dexterl3.github.io/anime25.jpg);">
 				<br>
 				<div class="insidePar">
 					<div id="employer">
